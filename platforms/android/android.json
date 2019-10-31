@@ -1,0 +1,275 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {
+      "app/src/main/AndroidManifest.xml": {
+        "parents": {
+          "/manifest/application": [
+            {
+              "xml": "<application android:networkSecurityConfig=\"@xml/network_security_config\" />",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml",
+              "oldAttrib": {
+                "android:hardwareAccelerated": "true",
+                "android:icon": "@mipmap/ic_launcher",
+                "android:label": "@string/app_name",
+                "android:networkSecurityConfig": "@xml/network_security_config",
+                "android:supportsRtl": "true",
+                "android:usesCleartextTraffic": "true"
+              }
+            },
+            {
+              "xml": "<application android:usesCleartextTraffic=\"true\" />",
+              "count": 1,
+              "mode": "merge",
+              "id": "config.xml",
+              "oldAttrib": {
+                "android:hardwareAccelerated": "true",
+                "android:icon": "@mipmap/ic_launcher",
+                "android:label": "@string/app_name",
+                "android:networkSecurityConfig": "@xml/network_security_config",
+                "android:supportsRtl": "true",
+                "android:usesCleartextTraffic": "true"
+              }
+            }
+          ]
+        }
+      },
+      "res/xml/config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"NfcPlugin\"><param name=\"android-package\" value=\"com.chariotsolutions.nfc.plugin.NfcPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 2
+            },
+            {
+              "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.sqlc.SQLitePlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"CDVOrientation\"><param name=\"android-package\" value=\"cordova.plugins.screenorientation.CDVOrientation\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"CordovaStripe\"><param name=\"android-package\" value=\"com.zyramedia.cordova.stripe.CordovaStripe\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<allow-navigation href=\"http://localhost/*\" />",
+              "count": 1
+            },
+            {
+              "xml": "<allow-navigation href=\"https://localhost/*\" />",
+              "count": 1
+            },
+            {
+              "xml": "<allow-navigation href=\"ionic://*\" />",
+              "count": 1
+            },
+            {
+              "xml": "<preference name=\"webView\" value=\"com.ionicframework.cordova.webview.IonicWebViewEngine\" />",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"IonicWebView\"><param name=\"android-package\" value=\"com.ionicframework.cordova.webview.IonicWebView\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"CDVIonicKeyboard\"><param name=\"android-package\" onload=\"true\" value=\"io.ionic.keyboard.CDVIonicKeyboard\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      },
+      "AndroidManifest.xml": {
+        "parents": {
+          "/manifest": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.NFC\" />",
+              "count": 2
+            },
+            {
+              "xml": "<uses-feature android:name=\"android.hardware.nfc\" android:required=\"false\" />",
+              "count": 2
+            }
+          ],
+          "/manifest/uses-sdk": [
+            {
+              "xml": "<uses-sdk android:minSdkVersion=\"19\" />",
+              "count": 1,
+              "mode": "merge",
+              "plugin": "phonegap-nfc",
+              "oldAttrib": {
+                "android:minSdkVersion": "19"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-ionic-webview": {
+      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "phonegap-nfc": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "phonegap-nfc-isodep": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-stripe": {
+      "PACKAGE_NAME": "io.ionic.starter"
+    }
+  },
+  "dependent_plugins": {},
+  "modules": [
+    {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
+    },
+    {
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
+      "clobbers": [
+        "device"
+      ]
+    },
+    {
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
+      "clobbers": [
+        "navigator.splashscreen"
+      ]
+    },
+    {
+      "id": "cordova-plugin-ionic-webview.IonicWebView",
+      "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
+      "pluginId": "cordova-plugin-ionic-webview",
+      "clobbers": [
+        "Ionic.WebView"
+      ]
+    },
+    {
+      "id": "cordova-plugin-ionic-keyboard.keyboard",
+      "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
+      "pluginId": "cordova-plugin-ionic-keyboard",
+      "clobbers": [
+        "window.Keyboard"
+      ]
+    },
+    {
+      "id": "phonegap-nfc.NFC",
+      "file": "plugins/phonegap-nfc/www/phonegap-nfc.js",
+      "pluginId": "phonegap-nfc",
+      "runs": true
+    },
+    {
+      "id": "phonegap-nfc-isodep.NFC",
+      "file": "plugins/phonegap-nfc-isodep/www/phonegap-nfc.js",
+      "pluginId": "phonegap-nfc-isodep",
+      "runs": true
+    },
+    {
+      "id": "cordova-sqlite-storage.SQLitePlugin",
+      "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+      "pluginId": "cordova-sqlite-storage",
+      "clobbers": [
+        "SQLitePlugin"
+      ]
+    },
+    {
+      "id": "es6-promise-plugin.Promise",
+      "file": "plugins/es6-promise-plugin/www/promise.js",
+      "pluginId": "es6-promise-plugin",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-screen-orientation.screenorientation",
+      "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+      "pluginId": "cordova-plugin-screen-orientation",
+      "clobbers": [
+        "cordova.plugins.screenorientation"
+      ]
+    },
+    {
+      "id": "cordova-plugin-stripe.stripe",
+      "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
+      "pluginId": "cordova-plugin-stripe",
+      "clobbers": [
+        "cordova.plugins.stripe"
+      ]
+    }
+  ],
+  "plugin_metadata": {
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-ionic-webview": "4.1.2",
+    "cordova-plugin-ionic-keyboard": "2.2.0",
+    "phonegap-nfc": "1.0.3",
+    "phonegap-nfc-isodep": "0.7.1",
+    "cordova-sqlite-storage": "3.4.0",
+    "es6-promise-plugin": "4.2.2",
+    "cordova-plugin-screen-orientation": "3.0.2",
+    "cordova-plugin-stripe": "1.5.3"
+  }
+}
