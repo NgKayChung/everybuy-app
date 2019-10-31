@@ -1,0 +1,30 @@
+.back-image {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-image: url('https://fsb.zobj.net/crop.php?r=rex_0tP1HKR2pY1c6ermySVJgruM1bi_LkZAfVPkmiEP00g7kiD-rcfUhfKUq5xOdmq3zqpcMmaO0xx9F3JeUQ2F7YrruIm5iiPZMejq5xs7mlYhKuwC_46ESFcBMJTQArQsHRN8w2AZcewoS0giRCFCrkc-o6dGhC-YoF_NILLvXNBhOX9d98OimH14FRLga9PjHCrWMyYqrx-9');
+    width: 100%;
+    height: 100%;
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+    transform: scale(1.1);
+}
+
+ion-content {
+    --background: none;
+}
+
+.register-menu {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    height: 100%;
+    border-radius: 3px;
+    overflow-y: scroll;
+}
+
+.register-menu ion-item {
+    border-radius: 5px;
+}

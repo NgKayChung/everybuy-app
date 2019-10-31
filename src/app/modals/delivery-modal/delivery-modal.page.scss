@@ -1,0 +1,18 @@
+ion-card:first-of-type {
+    margin: 0px;
+}
+
+ion-card {
+    margin: 10px 0px;
+    padding: 5px 0px;
+    background-color: white;
+}
+
+.delivery-check {
+    display: none;
+    color: #025296;
+}
+
+.checked {
+    display: initial;
+}

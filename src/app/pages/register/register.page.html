@@ -1,0 +1,42 @@
+<div class="back-image"></div>
+<ion-content class="ion-padding">
+  <div class="register-menu">
+    <p [routerLink]="['/login']" style="text-align: center; font-size: medium; color: #02245f; margin: 5px;">>> Already have an account? Login here <<</p>
+    <ion-title style="margin: 15px 10px; text-align: center;">Account Registration</ion-title>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="floating">Username</ion-label>
+      <ion-input [(ngModel)]="newUsername_st" placeholder="eg. john1234"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="floating">Surname</ion-label>
+      <ion-input [(ngModel)]="newFirstname_st" placeholder="eg. John"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="floating">Given Name</ion-label>
+      <ion-input [(ngModel)]="newLastname_st" placeholder="eg. Appleseed"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="floating">Email Address</ion-label>
+      <ion-input type="email" [(ngModel)]="newEmail_st" placeholder="eg. john.appleseed@gmail.com"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="floating">Phone Number</ion-label>
+      <ion-input type="tel" [(ngModel)]="newPhoneNumber_st" placeholder="eg. 0123456789"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input type="password" [(ngModel)]="newPassword_st"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Confirm Password</ion-label>
+      <ion-input type="password" [(ngModel)]="confirmPassword_st"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-checkbox [(ngModel)]="tncChecked_bl"></ion-checkbox>
+      <ion-label style="margin-left: 10px; color: #002d7b; font-size: small;">I agree to the Terms and Conditions</ion-label>
+    </ion-item>
+    <ion-button style="margin: 15px 0px;" expand="full" (click)="register()">
+      Register
+    </ion-button>
+  </div>
+</ion-content>

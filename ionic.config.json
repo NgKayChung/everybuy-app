@@ -1,5 +1,8 @@
 {
-  "name": "myApp",
-  "integrations": {},
-  "type": "angular"
+  "name": "EveryBuy",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "6b1a773e"
 }

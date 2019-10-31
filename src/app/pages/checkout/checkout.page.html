@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ng-template [ngIf]="productInfo">
+      <ion-buttons>
+        <ion-back-button color="secondary" [defaultHref]="'/product-details/' + productInfo.product_id"></ion-back-button>
+        <ion-title>Checkout</ion-title>
+      </ion-buttons>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-template [ngIf]="productInfo">
+    <ion-card>
+      <ion-item class="item-thumbnail-left" lines="none">
+        <ion-img class="image" [src]="productInfo.thumbnail_image_st"></ion-img>
+        <div class="item-info">
+          <p class="prod-name">
+            {{productInfo.product_name_st}}
+          </p>
+          <label class="price">
+            RM {{productInfo.product_price_nm.toFixed(2)}}
+          </label>
+          <label>x1</label>
+        </div>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item-group>
+        <ion-item lines="full">
+          <ion-icon name="pin" color="secondary"></ion-icon>
+          <label style="font-weight: bold; color: #4E4E4E; font-family: sans-serif; margin-left: 3px;">Delivery Address</label>
+        </ion-item>
+        <ion-item lines="full" detail=true (click)="presentDeliveryModal()">
+          <!-- <ion-label>Choose your delivery address</ion-label> -->
+          <ion-label class="ion-text-wrap" style="color: #4E4E4E; font-family: sans-serif;">
+            <ion-text>Ng Kay Chung</ion-text>
+            <br/>
+            <label>011-1645 9971</label>
+            <br/>
+            <ion-text>
+              <label>9-2-2 Lorong 6/125 Desa Petaling, 57100 Kuala Lumpur</label>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-card>
+    <ion-card>
+      <ion-item-group>
+        <ion-item lines="full">
+          <ion-icon src="/assets/shipping-icon.svg" color="secondary"></ion-icon>
+          <label style="font-weight: bold; color: #4E4E4E; font-family: sans-serif; margin-left: 3px;">Shipping Option</label>
+        </ion-item>
+        <ion-item lines="full" detail=true style="color: #4E4E4E; font-family: sans-serif;">
+          <ion-label>Pos Laju</ion-label>
+          <ion-label>RM 3.59</ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-card>
+    <ion-card>
+      <ion-item-group>
+        <ion-item lines="full">
+          <ion-icon name="card" color="secondary"></ion-icon>
+          <label style="font-weight: bold; color: #4E4E4E; font-family: sans-serif; margin-left: 3px;">Payment Option</label>
+        </ion-item>
+        <ion-item lines="full" detail=true style="color: #4E4E4E; font-family: sans-serif;">
+          <ion-label>Credit/Debit Card</ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-card>
+  </ng-template>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" color="primary" style="margin: 0px;">
+    <ion-label>Place Order</ion-label>
+    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+  </ion-button>
+</ion-footer>

@@ -1,0 +1,25 @@
+<div class="back-image"></div>
+<ion-content class="ion-padding">
+  <ion-grid style="height: 100%;">
+    <ion-row style="height: 100%;">
+      <ion-col class="ion-align-self-end">
+        <div class="login-menu">
+          <p [routerLink]="['/register']" style="text-align: center; font-size: medium; color: #02245f;">>> Not a member? Sign Up here <<</p>
+          <ion-title style="margin: 20px 10px; text-align: center;">Login to EveryBuy</ion-title>
+          <ion-item style="margin: 30px 0px 8px;">
+            <ion-label position="floating">Username / Email / Phone Number</ion-label>
+            <ion-input [(ngModel)]="username_st" placeholder="eg. abc1234"></ion-input>
+          </ion-item>
+          <ion-item style="margin: 8px 0px;">
+            <ion-label position="stacked">Password</ion-label>
+            <ion-input [(ngModel)]="password_st" type="password" placeholder=""></ion-input>
+          </ion-item>
+          <ion-button style="margin: 30px 0px;" expand="full" (click)="login()">
+            Login
+          </ion-button>
+          <p style="text-align: center; font-size: small; color: #002d7b;" (click)="guestLogin()">Continue as Guest</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class="welcome-card">
+      <img src="/assets/shapes.svg" alt="" />
+      <ion-card-header>
+        <ion-card-subtitle>Profile</ion-card-subtitle>
+        <ion-card-title id="username-title">...</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>You can edit your profile preferences here.</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-icon slot="start" color="medium" name="settings"></ion-icon>
+        <ion-label>Account Settings</ion-label>
+      </ion-item>
+      <ion-item (click)="logout()">
+        <ion-icon slot="start" color="medium" name="log-out"></ion-icon>
+        <ion-label>Logout</ion-label>
+      </ion-item>
+    </ion-list>
+    <!-- <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+      <ion-fab-button (click)="logout()">
+        <ion-icon name="arrow-dropup"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+</ion-content>
+<app-tabs></app-tabs>

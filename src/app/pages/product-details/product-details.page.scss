@@ -1,0 +1,39 @@
+ion-content {
+    --background: #F1F1F1;
+}
+
+/** scroll event styles start **/
+ion-header.atTop {
+    position: relative;
+}
+
+ion-header.scrolledTop {
+    top: -56px;
+    transform: translate(0px, 56px);
+    transition: all 0.5s;
+}
+
+ion-header.scrolled > ion-toolbar {
+    --ion-color-base: #ffffff30 !important;
+    color: black;
+}
+
+ion-header.scrolled {
+    position: fixed;
+}
+/** scroll event styles end **/
+
+ion-title {
+    overflow: hidden;
+}
+
+ion-card:first-of-type {
+    margin: 0px;
+    padding: 10px 0px;
+    background-color: white;
+    color: black;
+}
+
+ion-card {
+    margin: 10px 0px;
+}
