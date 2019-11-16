@@ -1,0 +1,62 @@
+.content-wrapper {
+    height: 100%;
+    background-color: var(--ion-color-secondary);
+}
+
+.nfc-wrapper {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+}
+
+@keyframes shake {
+    0% {left: 0}
+    1% {left: -2px}
+    2% {left: 4px}
+    3% {left: -6px}
+    4% {left: 6px}
+    5% {left: -4px}
+    6% {left: 2px}
+    7% {left: 0}
+}
+
+.nfc-wrapper > .nfc-btn {
+    position: relative;
+    animation-name: shake;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+}
+
+.form-wrapper {
+    padding: 10px;
+    background-color: white;
+}
+
+.nfc-overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 10;
+}
+
+.nfc-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+.nfc-caption {
+    text-align: center;
+    margin: 0px;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}

@@ -24,6 +24,8 @@ ion-card {
 }
 
 .prod-name {
+    margin-top: 0px;
+    font-size: large;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
@@ -32,8 +34,17 @@ ion-card {
 }
 
 .price{
-    font-size: 16px;
+    font-size: large;
     margin-right: 60px;
     font-weight: 500;
+    color: #025296;
+}
+
+.total-title {
+    font-size: larger;
+}
+
+.total-price {
+    font-size: larger;
     color: #025296;
 }

@@ -4,14 +4,13 @@ import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 import { AppConfig } from '../app.config';
-import { resolve } from 'url';
 
 export interface API_AUTH_RESPONSE {
   code: number;
   message: string;
 }
 
-export interface API_LOGIN_AUTH_RESPONSE extends API_AUTH_RESPONSE {
+export interface API_AUTH_DATA_RESPONSE extends API_AUTH_RESPONSE {
   uid: string;
 }
 
@@ -25,7 +24,6 @@ export interface API_ENQUIRY_RESPONSE extends API_AUTH_RESPONSE {
 export class AuthService {
   private USER_LOGIN_API_URL = AppConfig.API_HOST_URL + "/api/users/login";
   private USER_GUEST_LOGIN_API_URL = AppConfig.API_HOST_URL + "/api/users/login/guest";
-  private USER_CHECK_USERNAME_API_URL = AppConfig.API_HOST_URL + "/api/users/check";
   private USER_ENQUIRY_API_URL = AppConfig.API_HOST_URL + "/api/users/enquiry";
   private USER_CREATE_API_URL = AppConfig.API_HOST_URL + "/api/users/create";
   
@@ -45,7 +43,7 @@ export class AuthService {
       };
 
       this.httpClient.post(this.USER_LOGIN_API_URL, loginData)
-        .subscribe((response: API_LOGIN_AUTH_RESPONSE) => {
+        .subscribe((response: API_AUTH_DATA_RESPONSE) => {
           if(response.code == 20) {
             resolve(response);
           }
@@ -66,7 +64,7 @@ export class AuthService {
       };
   
       this.httpClient.post(this.USER_GUEST_LOGIN_API_URL, loginData)
-        .subscribe((response: API_LOGIN_AUTH_RESPONSE) => {
+        .subscribe((response: API_AUTH_DATA_RESPONSE) => {
           if(response.code == 20) {
             resolve(response);
           }
@@ -82,7 +80,7 @@ export class AuthService {
   registerUser(userData) {
     return new Promise((resolve, reject) => {
       this.httpClient.post(`${ this.USER_CREATE_API_URL }`, userData)
-        .subscribe((response: API_LOGIN_AUTH_RESPONSE) => {
+        .subscribe((response: API_AUTH_DATA_RESPONSE) => {
           if(response.code == 20) {
             resolve(response);
           }

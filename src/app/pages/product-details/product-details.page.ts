@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { ProductService } from '../../services/product.service';
+import { OrderService } from '../../services/order.service';
 
 import Swal from 'sweetalert2';
 
@@ -38,7 +39,8 @@ export class ProductDetailsPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private auth: AuthService,
-    private productService: ProductService
+    private productService: ProductService,
+    private orderService: OrderService
   ) {}
 
   ngOnInit() {
@@ -67,7 +69,7 @@ export class ProductDetailsPage implements OnInit {
 
   purchase() {
     this.auth.isGuest()
-      .then((userIsGuest_bl) => {
+      .then(async (userIsGuest_bl) => {
         if(userIsGuest_bl == true) {
           Swal.fire({
             title: "Guest",
@@ -86,20 +88,8 @@ export class ProductDetailsPage implements OnInit {
           });
         }
         else {
-          // Swal.fire({
-          //   title: "Confirmation",
-          //   text: "Confirm purchase of this item?",
-          //   type: "question",
-          //   showCancelButton: true,
-          //   confirmButtonText: "Yes, Confirm",
-          //   cancelButtonText: "No"
-          // }).then((result) => {
-          //   if(result.value) {
-          //     // sends parameters to purchase page
-          //     let product_id = this.activatedRoute.snapshot.paramMap.get('id');
-          //     this.navCtrl.navigateRoot("/checkout/" + product_id);
-          //   }
-          // });
+          this.orderService.removeAnyExistingOrder();
+
           // sends parameters to purchase page
           let product_id = this.activatedRoute.snapshot.paramMap.get('id');
           this.navCtrl.navigateRoot("/checkout/" + product_id);

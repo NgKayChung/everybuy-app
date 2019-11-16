@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button color="secondary" fill="clear" (click)="dismissModal()">
+        <ion-icon name="arrow-back" style="font-size: 20pt;"></ion-icon>
+      </ion-button>
+      <ion-title>Add Delivery Address</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="add-delivery-menu">
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input [(ngModel)]="receiverName_st" placeholder="Set Name"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Phone Number</ion-label>
+      <ion-input type="tel" [(ngModel)]="receiverPhone_st" placeholder="Set Phone Number"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Address Line 1</ion-label>
+      <ion-input [(ngModel)]="addressLine1_st" placeholder="Set Address 1"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Address Line 2 (optional)</ion-label>
+      <ion-input [(ngModel)]="addressLine2_st" placeholder="Set Address 2"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Postal Code</ion-label>
+      <ion-input [(ngModel)]="zipcode_st" placeholder="Set Postal Code"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">State / City / Province</ion-label>
+      <ion-input [(ngModel)]="state_st" placeholder="Set State"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Country</ion-label>
+      <ion-input [(ngModel)]="country_st" placeholder="Set Country"></ion-input>
+    </ion-item>
+    <ion-item style="margin: 8px 0px;">
+      <ion-label position="stacked">Remarks (optional)</ion-label>
+      <ion-input [(ngModel)]="remarks_st" placeholder="Set Remarks"></ion-input>
+    </ion-item>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" (click)="submitDeliveryAddress()">
+    <ion-label>Add Delivery Address</ion-label>
+    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+  </ion-button>
+</ion-footer>

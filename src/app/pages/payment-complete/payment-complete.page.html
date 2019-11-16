@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title class="ion-text-center" style="font-size: x-large; font-weight: bold;">Successful</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="ion-text-center" style="margin: 1rem 0px;">
+    <ion-icon name="checkmark" size="large" style="color: lawngreen"></ion-icon>
+    <h3 style="margin-top: 0px; font-weight: bold;">Successful</h3>
+  </div>
+  <ion-card class="receipt-container">
+    <h3 class="ion-text-center" style="color: black;">Receipt</h3>
+    <div>
+      <p class="field-title">Order ID</p>
+      <ng-template [ngIf]="orderID">
+        <p class="field-value">{{ orderID }}</p>
+      </ng-template>
+    </div>
+    <div>
+      <p class="field-title">Order Time</p>
+      <ng-template [ngIf]="orderTime">
+        <p class="field-value">{{ orderTime }}</p>
+      </ng-template>
+    </div>
+    <div>
+      <p class="field-title">Total Amount</p>
+      <ng-template [ngIf]="totalAmount_nm">
+        <p class="field-value">RM{{ totalAmount_nm.toFixed(2) }}</p>
+      </ng-template>
+    </div>
+    <div>
+      <p class="field-title">Payment</p>
+      <p class="field-value">Debit/Credit Card</p>
+    </div>
+    <div>
+      <p class="field-title">Card No</p>
+      <ng-template [ngIf]="cardNo_st">
+        <p class="field-value">xxxxxxxxxxxx{{ cardNo_st }}</p>
+      </ng-template>
+    </div>
+  </ion-card>
+  <p class="ion-text-center" style="color: dimgrey; margin-bottom: 0.3rem;">Tap to view your payment receipt</p>
+  <div class="ion-text-center" style="margin: 0 2rem 1rem;">
+    <ion-button shape="round" color="primary" slot="icon-only" (click)="viewReceipt()">
+      <ion-icon name="print"></ion-icon>
+    </ion-button>
+    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+  </div>
+  <div class="ion-text-center">
+    <ion-button shape="round" color="success" style="width: 75%;" (click)="doneBackToHome()">Done</ion-button>
+    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+  </div>
+</ion-content>

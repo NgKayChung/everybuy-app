@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ng-template [ngIf]="checkoutProductId">
+          <ion-back-button color="secondary" [defaultHref]="'/checkout/' + checkoutProductId"></ion-back-button>
+      </ng-template>
+      <ion-title>Payment</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-template [ngIf]="orderId">
+    <div class="ion-padding content-wrapper">
+      <ion-card class="form-wrapper">
+        <ng-template [ngIf]="nfcAccepted_bool == true">
+          <div class="nfc-wrapper">
+            <div class="nfc-btn">
+              <ion-button size="small" (click)="NFCScan()">
+                <ion-icon name="wifi"></ion-icon>
+                <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+              </ion-button>
+            </div>
+          </div>
+        </ng-template>
+        <h6 class="ion-text-center">Total Payable</h6>
+        <ng-template [ngIf]="amountPayable_nm">
+          <h4 class="ion-text-center">RM {{ amountPayable_nm.toFixed(2) }}</h4>
+        </ng-template>
+        <p style="margin-bottom: 0px;" class="ion-text-center">Enter card details below{{ (nfcAccepted_bool == true ? " | Read card using NFC": "") }}</p>
+        <ion-list>
+          <ion-item>
+            <ion-label color="primary" position="floating">Card Number</ion-label>
+            <ion-input type="text" [(ngModel)]="cardNumber_st"></ion-input>
+            <!-- placeholder="Enter your 16 digit card number"  -->
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" position="floating">Expiration Month</ion-label>
+            <ion-input type="number" [(ngModel)]="expMonth_st"></ion-input>
+            <!-- placeholder="Enter your card expiration month" -->
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" position="floating">Expiration Year</ion-label>
+            <ion-input type="number"
+            [(ngModel)]="expYear_st"></ion-input>
+            <!-- placeholder="Enter your card expiration year" -->
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" position="floating">CVV</ion-label>
+            <ion-input type="text"
+            [(ngModel)]="cvc_st"></ion-input>
+            <!-- placeholder="Enter your CVV" -->
+          </ion-item>
+        </ion-list>
+        <ion-button expand="full" (click)="processPayment()">
+          Submit
+          <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        </ion-button>
+      </ion-card>
+    </div>
+  </ng-template>
+</ion-content>
+<ng-template [ngIf]="nfcAccepted_bool == true">
+  <div class="nfc-overlay hidden">
+    <ion-icon name="close-circle" size="small" class="nfc-close" (click)="closeNFC()"></ion-icon>
+    <p class="nfc-caption">Tap the card to your phone device</p>
+  </div>
+</ng-template>

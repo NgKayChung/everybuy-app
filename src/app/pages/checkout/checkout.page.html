@@ -30,18 +30,24 @@
           <ion-icon name="pin" color="secondary"></ion-icon>
           <label style="font-weight: bold; color: #4E4E4E; font-family: sans-serif; margin-left: 3px;">Delivery Address</label>
         </ion-item>
-        <ion-item lines="full" detail=true (click)="presentDeliveryModal()">
-          <!-- <ion-label>Choose your delivery address</ion-label> -->
-          <ion-label class="ion-text-wrap" style="color: #4E4E4E; font-family: sans-serif;">
-            <ion-text>Ng Kay Chung</ion-text>
-            <br/>
-            <label>011-1645 9971</label>
-            <br/>
-            <ion-text>
-              <label>9-2-2 Lorong 6/125 Desa Petaling, 57100 Kuala Lumpur</label>
-            </ion-text>
-          </ion-label>
-        </ion-item>
+        <ng-template [ngIf]="selectedDeliveryAddress" [ngIfElse]="noDeliveryAddress">
+          <ion-item lines="full" detail=true (click)="presentDeliveryModal(selectedDeliveryAddress.delivery_id)">
+            <ion-label class="ion-text-wrap" style="color: #4E4E4E; font-family: sans-serif;">
+              <ion-text>{{selectedDeliveryAddress.rec_name_st}}</ion-text>
+              <br/>
+              <label>{{selectedDeliveryAddress.rec_phone_st}}</label>
+              <br/>
+              <ion-text>
+                <label>{{selectedDeliveryAddress.address1_st + ", " + (selectedDeliveryAddress.address2_st == null ? "" : selectedDeliveryAddress.address2_st + ", ") + selectedDeliveryAddress.zipcode_st + " " + selectedDeliveryAddress.state_st}}</label>
+              </ion-text>
+            </ion-label>
+          </ion-item>
+        </ng-template>
+        <ng-template #noDeliveryAddress>
+          <ion-item lines="full" detail=true (click)="presentDeliveryModal()">
+            <ion-label>Choose your delivery address</ion-label>
+          </ion-item>
+        </ng-template>
       </ion-item-group>
     </ion-card>
     <ion-card>
@@ -50,10 +56,14 @@
           <ion-icon src="/assets/shipping-icon.svg" color="secondary"></ion-icon>
           <label style="font-weight: bold; color: #4E4E4E; font-family: sans-serif; margin-left: 3px;">Shipping Option</label>
         </ion-item>
-        <ion-item lines="full" detail=true style="color: #4E4E4E; font-family: sans-serif;">
-          <ion-label>Pos Laju</ion-label>
-          <ion-label>RM 3.59</ion-label>
-        </ion-item>
+        <ng-template [ngIf]="selectedShippingOption">
+          <ion-item lines="full" detail=true style="color: #4E4E4E; font-family: sans-serif;" (click)="presentShippingOptionsModal(selectedShippingOption.shipping_id)">
+            <ion-label>
+              <label>{{selectedShippingOption.courier_name_st}}</label>
+              <label style="position: absolute; left: 50%;">RM {{selectedShippingOption.courier_charge_nm.toFixed(2)}}</label>
+            </ion-label>
+          </ion-item>
+        </ng-template>
       </ion-item-group>
     </ion-card>
     <ion-card>
@@ -62,15 +72,41 @@
           <ion-icon name="card" color="secondary"></ion-icon>
           <label style="font-weight: bold; color: #4E4E4E; font-family: sans-serif; margin-left: 3px;">Payment Option</label>
         </ion-item>
-        <ion-item lines="full" detail=true style="color: #4E4E4E; font-family: sans-serif;">
+        <ion-item lines="full" style="color: #4E4E4E; font-family: sans-serif;">
           <ion-label>Credit/Debit Card</ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-card>
+    <ion-card>
+      <ion-item-group>
+        <ion-item lines="none">
+          <ion-label>Item Subtotal</ion-label>
+          <ion-label>RM {{productInfo.product_price_nm.toFixed(2)}}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Shipping Subtotal</ion-label>
+          <ng-template [ngIf]="selectedShippingOption" [ngIfElse]="shippingsubload">
+            <ion-label>RM {{selectedShippingOption.courier_charge_nm.toFixed(2)}}</ion-label>
+          </ng-template>
+          <ng-template #shippingsubload>
+            <ion-label>RM 0.00</ion-label>
+          </ng-template>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="total-title">Total Payment</ion-label>
+          <ng-template [ngIf]="selectedShippingOption" [ngIfElse]="totalpaymentload">
+            <ion-label class="total-price">RM {{(productInfo.product_price_nm + selectedShippingOption.courier_charge_nm).toFixed(2)}}</ion-label>
+          </ng-template>
+          <ng-template #totalpaymentload>
+            <ion-label class="total-price">RM 0.00</ion-label>
+          </ng-template>
         </ion-item>
       </ion-item-group>
     </ion-card>
   </ng-template>
 </ion-content>
 <ion-footer>
-  <ion-button expand="full" color="primary" style="margin: 0px;">
+  <ion-button expand="full" color="primary" (click)="placeOrder()">
     <ion-label>Place Order</ion-label>
     <ion-ripple-effect type="unbounded"></ion-ripple-effect>
   </ion-button>

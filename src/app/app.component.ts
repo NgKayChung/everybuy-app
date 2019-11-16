@@ -40,7 +40,7 @@ export class AppComponent implements AfterViewInit {
         currentModal = topModal;
       });
       
-      // if yes, dismiss the modal
+      // if yes, close the modal
       if(currentModal != undefined) {
         this.modalCtrl.dismiss();
         return;
@@ -65,6 +65,9 @@ export class AppComponent implements AfterViewInit {
       }
       else if(view == "login" || view == "register") {
         navigator['app'].exitApp(); // Exit app
+      }
+      else if(view == "payment-complete") {
+        this.navCtrl.navigateRoot("/home");
       }
       else {
         // go to previous page

@@ -73,6 +73,10 @@
             {
               "xml": "<feature name=\"CordovaStripe\"><param name=\"android-package\" value=\"com.zyramedia.cordova.stripe.CordovaStripe\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -171,6 +175,9 @@
     },
     "cordova-plugin-stripe": {
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "io.ionic.starter"
     }
   },
   "dependent_plugins": {},
@@ -256,6 +263,15 @@
       "clobbers": [
         "cordova.plugins.stripe"
       ]
+    },
+    {
+      "id": "cordova-plugin-inappbrowser.inappbrowser",
+      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+      "pluginId": "cordova-plugin-inappbrowser",
+      "clobbers": [
+        "cordova.InAppBrowser.open",
+        "window.open"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -270,6 +286,7 @@
     "cordova-sqlite-storage": "3.4.0",
     "es6-promise-plugin": "4.2.2",
     "cordova-plugin-screen-orientation": "3.0.2",
-    "cordova-plugin-stripe": "1.5.3"
+    "cordova-plugin-stripe": "1.5.3",
+    "cordova-plugin-inappbrowser": "3.1.0"
   }
 }

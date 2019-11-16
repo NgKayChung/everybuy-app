@@ -35,10 +35,29 @@ const routes: Routes = [
     loadChildren: './pages/checkout/checkout.module#CheckoutPageModule'
   },
   {
+    path: 'delivery-modal',
+    loadChildren: './modals/delivery-modal/delivery-modal.module#DeliveryModalPageModule'
+  },
+  {
+    path: 'add-delivery-modal',
+    loadChildren: './modals/add-delivery-modal/add-delivery-modal.module#AddDeliveryModalPageModule'
+  },
+  {
+    path: 'shipping-modal',
+    loadChildren: './modals/shipping-modal/shipping-modal.module#ShippingModalPageModule'
+  },
+  {
+    path: 'payment',
+    loadChildren: './pages/payment/payment.module#PaymentPageModule'
+  },
+  {
+    path: 'payment/payment-complete',
+    loadChildren: './pages/payment-complete/payment-complete.module#PaymentCompletePageModule'
+  },
+  {
     path: '*',
     redirectTo: 'home'
-  },
-  { path: 'delivery-modal', loadChildren: './modals/delivery-modal/delivery-modal.module#DeliveryModalPageModule' }
+  }
 ];
 
 @NgModule({

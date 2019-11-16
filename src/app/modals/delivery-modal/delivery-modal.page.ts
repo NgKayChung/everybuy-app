@@ -1,5 +1,9 @@
-import { Component, OnInit, Injectable } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { ModalController, NavParams } from '@ionic/angular';
+
+import { OrderService } from '../../services/order.service';
+
+import { AddDeliveryModalPage } from '../add-delivery-modal/add-delivery-modal.page';
 
 import $ from 'jquery';
 
@@ -9,30 +13,57 @@ import $ from 'jquery';
   styleUrls: ['./delivery-modal.page.scss'],
 })
 export class DeliveryModalPage implements OnInit {
+  public selectedDeliveryId: number;
+  public deliveryAddresses: any;
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(
+    private modalCtrl: ModalController,
+    private navParams: NavParams,
+    private orderService: OrderService
+  ) { }
 
   ngOnInit() {
   }
 
-  selectDeliveryAddress(selected_id) {
-    let thisIcon_elem = $(`ion-item[data-id="${ selected_id }"]`).children("ion-icon");
-    if(thisIcon_elem.hasClass("checked")) {
-      thisIcon_elem.removeClass("checked");
-    }
-    else {
-      $("ion-item").children("ion-icon").removeClass("checked");
-      thisIcon_elem.addClass("checked");
-    }
-    // var selectedItem = document.querySelectorAll(`ion-item[data-id="${ selected_id }"]`);
-    // console.log(selectedItem[0].lastElementChild.classList.toggle("checked"));
+  ionViewWillEnter() {
+    this.selectedDeliveryId = this.navParams.get("selected");
+    this.orderService.getDeliveryAddresses()
+      .then((deliveryAddress_data) => {
+        this.deliveryAddresses = deliveryAddress_data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  addDeliveryAddress() {
-    console.log("add delivery address");
+  selectDeliveryAddress(selected_id) {
+    this.selectedDeliveryId = selected_id;
+    let thisSelected_elem = $(`ion-item[data-id="${ selected_id }"]`);
+    if(thisSelected_elem.hasClass("selected") == false) {
+      $("ion-item").removeClass("selected");
+      thisSelected_elem.addClass("selected");
+    }
+  }
+
+  async presentAddDeliveryModal(deliveryId) {
+    const modal = await this.modalCtrl.create({
+      component: AddDeliveryModalPage
+    });
+
+    modal.onDidDismiss()
+      .then(() => {
+        this.orderService.getDeliveryAddresses()
+          .then((deliveryAddress_data) => {
+            this.deliveryAddresses = deliveryAddress_data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    return await modal.present();
   }
 
   dismissModal() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({ selectedDelivery: this.selectedDeliveryId });
   }
 }

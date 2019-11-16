@@ -23,68 +23,68 @@ export class NFCPage implements OnInit {
   constructor(private nfc: NFC, private storage: Storage) {
     storage.get('uid').then((val) => {
     });
-    nfc.enabled()
-      .then(() => {
-        this.nfcWorking = true;
-        nfc.addTagDiscoveredListener().subscribe(data => {
-          let tagId = nfc.bytesToHexString(data.tag.id);
-          document.getElementById('nfc-tagId').innerText = tagId;
-          document.getElementById('nfc-result').innerText = JSON.stringify(data);
+    // nfc.enabled()
+    //   .then(() => {
+    //     this.nfcWorking = true;
+    //     nfc.addTagDiscoveredListener().subscribe(data => {
+    //       let tagId = nfc.bytesToHexString(data.tag.id);
+    //       document.getElementById('nfc-tagId').innerText = tagId;
+    //       document.getElementById('nfc-result').innerText = JSON.stringify(data);
           
-          nfc.connect()
-            .then(() => {
-            })
-            .catch((response) => {
-              var readRequest = "00A404000E325041592E5359532E444446303100";
-              nfc.transceive(readRequest)
-                .then((responseData) => {
-                  document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
-                  document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
+    //       nfc.connect()
+    //         .then(() => {
+    //         })
+    //         .catch((response) => {
+    //           var readRequest = "00A404000E325041592E5359532E444446303100";
+    //           nfc.transceive(readRequest)
+    //             .then((responseData) => {
+    //               document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
+    //               document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
                   
-                  var aid = String(responseData).substring(String(responseData).lastIndexOf("4f07") + 4, String(responseData).lastIndexOf("4f07") + 18).toUpperCase();
-                  var readRequest = "00A4040007" + aid + "00";
-                  nfc.transceive(readRequest)
-                    .then((responseData) => {
-                      document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
-                      document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
+    //               var aid = String(responseData).substring(String(responseData).lastIndexOf("4f07") + 4, String(responseData).lastIndexOf("4f07") + 18).toUpperCase();
+    //               var readRequest = "00A4040007" + aid + "00";
+    //               nfc.transceive(readRequest)
+    //                 .then((responseData) => {
+    //                   document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
+    //                   document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
 
-                      var readRequest = "00B2010C00";
-                      nfc.transceive(readRequest)
-                        .then((responseData) => {
-                          document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
-                          document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
+    //                   var readRequest = "00B2010C00";
+    //                   nfc.transceive(readRequest)
+    //                     .then((responseData) => {
+    //                       document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
+    //                       document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
                           
-                          var readRequest = "00B2020C00";
-                          nfc.transceive(readRequest)
-                            .then((responseData) => {
-                              document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
-                              document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
+    //                       var readRequest = "00B2020C00";
+    //                       nfc.transceive(readRequest)
+    //                         .then((responseData) => {
+    //                           document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
+    //                           document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
                               
-                              var readRequest = "00B2011400";
-                              nfc.transceive(readRequest)
-                                .then((responseData) => {
-                                  document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
-                                  document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
+    //                           var readRequest = "00B2011400";
+    //                           nfc.transceive(readRequest)
+    //                             .then((responseData) => {
+    //                               document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
+    //                               document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
                                   
-                                  var readRequest = "00B2021400";
-                                  nfc.transceive(readRequest)
-                                    .then((responseData) => {
-                                      document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
-                                      document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
-                                      nfc.close();
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
-      })
-      .catch(err => {
-        this.nfcWorking = false;
-        document.getElementById('nfc-result').innerText = "NFC is not supported on this device";
-      });
+    //                               var readRequest = "00B2021400";
+    //                               nfc.transceive(readRequest)
+    //                                 .then((responseData) => {
+    //                                   document.getElementById('nfc-card-hex').innerHTML += '<br/>' + responseData;
+    //                                   document.getElementById('nfc-card-ascii').innerHTML += '<br/>' + this.hex_to_ascii(responseData);
+    //                                   nfc.close();
+    //                                 });
+    //                             });
+    //                         });
+    //                     });
+    //                 });
+    //             });
+    //         });
+    //     });
+    //   })
+    //   .catch(err => {
+    //     this.nfcWorking = false;
+    //     document.getElementById('nfc-result').innerText = "NFC is not supported on this device";
+    //   });
   }
 
   private hex_to_ascii(str) {

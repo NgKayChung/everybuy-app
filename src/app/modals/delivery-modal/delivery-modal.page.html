@@ -8,38 +8,25 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  <ng-template [ngIf]="deliveryAddresses && deliveryAddresses.length > 0">
+    <ion-card *ngFor="let deliveryAddress of deliveryAddresses">
+      <ion-item lines="none" [ngClass]="selectedDeliveryId === deliveryAddress.delivery_id ? 'selected': ''" class="delivery-select" (click)="selectDeliveryAddress(deliveryAddress.delivery_id)" [attr.data-id]="deliveryAddress.delivery_id">
+        <ion-label class="ion-text-wrap" style="color: #4E4E4E; font-family: sans-serif;">
+          <ion-text>{{deliveryAddress.rec_name_st}}</ion-text>
+          <br/>
+          <label>{{deliveryAddress.rec_phone_st}}</label>
+          <br/>
+          <ion-text>
+            <label>{{deliveryAddress.address1_st + ", " + (deliveryAddress.address2_st == null ? "" : deliveryAddress.address2_st + ", ") + deliveryAddress.zipcode_st + " " + deliveryAddress.state_st}}</label>
+          </ion-text>
+        </ion-label>
+        <ion-icon name="checkmark" size="small"></ion-icon>
+      </ion-item>
+    </ion-card>
+  </ng-template>
   <ion-card>
-    <ion-item lines="none" (click)="selectDeliveryAddress(1)" data-id="1">
-      <ion-label class="ion-text-wrap" style="color: #4E4E4E; font-family: sans-serif;">
-        <ion-text>Ng Kay Chung</ion-text>
-        <br/>
-        <label>011-1645 9971</label>
-        <br/>
-        <ion-text>
-          <label>9-2-2 Lorong 6/125 Desa Petaling, 57100 Kuala Lumpur</label>
-        </ion-text>
-      </ion-label>
-      <ion-icon name="checkmark" class="checked delivery-check" size="small"></ion-icon>
-    </ion-item>
-  </ion-card>
-  <ion-card>
-    <ion-item lines="none" (click)="selectDeliveryAddress(2)" data-id="2">
-      <ion-label class="ion-text-wrap" style="color: #4E4E4E; font-family: sans-serif;">
-        <ion-text>Hello</ion-text>
-        <br/>
-        <label>011-1645 9971</label>
-        <br/>
-        <ion-text>
-          <label>9-2-2 Lorong 6/125 Desa Petaling, 57100 Kuala Lumpur</label>
-        </ion-text>
-      </ion-label>
-      <ion-icon name="checkmark" class="delivery-check" size="small"></ion-icon>
-    </ion-item>
-  </ion-card>
-  <ion-card>
-    <ion-item lines="none" detail=true (click)="addDeliveryAddress()">
+    <ion-item lines="none" detail=true (click)="presentAddDeliveryModal()">
       <ion-label>Add new delivery address</ion-label>
     </ion-item>
   </ion-card>

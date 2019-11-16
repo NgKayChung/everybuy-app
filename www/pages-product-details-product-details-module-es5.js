@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-content [scrollEvents]=\"true\" (ionScroll)=\"scrollScreen($event)\">\n  <ion-header class=\"atTop scrolledTop\" #myHeader>\n    <ion-toolbar color=\"secondary\">\n      <ion-buttons>\n        <ion-back-button defaultHref=\"/home\"></ion-back-button>\n        <ng-template [ngIf]=\"productInfo\">\n          <ion-title>\n            {{productInfo.product_name_st}}\n          </ion-title>\n        </ng-template>\n      </ion-buttons>\n    </ion-toolbar>\n  </ion-header>\n  <ng-template [ngIf]=\"productInfo\" [ngIfElse]=\"noDetails\">\n    <ion-slides pager=\"true\" [options]=\"slideOpts\">\n      <ion-slide *ngFor=\"let productImage of getImages()\">\n        <img style=\"width: 100%;\" src=\"{{productImage}}\">\n      </ion-slide>\n    </ion-slides>\n    <ion-card>\n      <ion-item lines=\"none\">\n        <h3 id=\"prod-name\">\n          {{productInfo.product_name_st}}\n        </h3>\n      </ion-item>\n      <ion-item lines=\"none\">\n        <h4 id=\"price\" style=\"color: #025296;\">\n          RM {{productInfo.product_price_nm.toFixed(2)}}\n        </h4>\n      </ion-item>\n      <!-- <p class=\"category\">\n        Category: {{productInfo.product_cat_st}}\n      </p>\n      <p class=\"sub-category\">\n        Sub-Category: {{productInfo.product_subcat_st}}\n      </p> -->\n    </ion-card>\n    <ion-card>\n      <ion-item-group>\n        <ion-item lines=\"full\">\n          <ion-label style=\"font-weight: bold;\">\n            Product Details\n            <ion-icon name=\"information-circle-outline\"></ion-icon>\n          </ion-label>\n        </ion-item>\n        <ion-item lines=\"full\">\n          <ion-label>Stock</ion-label>\n          <ion-label>{{productInfo.product_stock_nm}}</ion-label>\n        </ion-item>\n        <!-- <ion-item lines=\"full\">\n          <ion-label>Brand</ion-label>\n        </ion-item>\n        <ion-item lines=\"full\">\n          <ion-label>Manufacturer</ion-label>\n        </ion-item> -->\n        <ion-item lines=\"full\">\n          <p style=\"color: #5A5A5A;\" [innerHTML]=\"productInfo.product_desc_st\" class=\"description\"></p>\n        </ion-item>\n      </ion-item-group>\n    </ion-card>\n  </ng-template>\n  <ng-template #noDetails>\n      <p style=\"padding: 0px 10px;\">Loading</p>\n  </ng-template>\n</ion-content>\n<ion-footer>\n  <ion-button expand=\"full\" color=\"primary\" style=\"margin: 0px;\" (click)=\"purchase()\">\n    <ion-label>Purchase Now</ion-label>\n    <ion-icon name=\"cart\"></ion-icon>\n    <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n  </ion-button>\n</ion-footer>"
+module.exports = "<ion-content [scrollEvents]=\"true\" (ionScroll)=\"scrollScreen($event)\">\n  <ion-header class=\"atTop scrolledTop\" #myHeader>\n    <ion-toolbar color=\"secondary\">\n      <ion-buttons>\n        <ion-back-button defaultHref=\"/home\"></ion-back-button>\n        <ng-template [ngIf]=\"productInfo\">\n          <ion-title>\n            {{productInfo.product_name_st}}\n          </ion-title>\n        </ng-template>\n      </ion-buttons>\n    </ion-toolbar>\n  </ion-header>\n  <ng-template [ngIf]=\"productInfo\" [ngIfElse]=\"noDetails\">\n    <ion-slides pager=\"true\" [options]=\"slideOpts\">\n      <ion-slide *ngFor=\"let productImage of getImages()\">\n        <img style=\"width: 100%;\" src=\"{{productImage}}\">\n      </ion-slide>\n    </ion-slides>\n    <ion-card>\n      <ion-item lines=\"none\">\n        <h3 id=\"prod-name\">\n          {{productInfo.product_name_st}}\n        </h3>\n      </ion-item>\n      <ion-item lines=\"none\">\n        <h4 id=\"price\" style=\"color: #025296;\">\n          RM {{productInfo.product_price_nm.toFixed(2)}}\n        </h4>\n      </ion-item>\n      <!-- <p class=\"category\">\n        Category: {{productInfo.product_cat_st}}\n      </p>\n      <p class=\"sub-category\">\n        Sub-Category: {{productInfo.product_subcat_st}}\n      </p> -->\n    </ion-card>\n    <ion-card>\n      <ion-item-group>\n        <ion-item lines=\"full\">\n          <ion-label style=\"font-weight: bold;\">\n            Product Details\n            <ion-icon name=\"information-circle-outline\"></ion-icon>\n          </ion-label>\n        </ion-item>\n        <ion-item lines=\"full\">\n          <ion-label>Stock</ion-label>\n          <ion-label>{{productInfo.product_stock_nm}}</ion-label>\n        </ion-item>\n        <!-- <ion-item lines=\"full\">\n          <ion-label>Brand</ion-label>\n        </ion-item>\n        <ion-item lines=\"full\">\n          <ion-label>Manufacturer</ion-label>\n        </ion-item> -->\n        <ion-item lines=\"full\">\n          <p style=\"color: #5A5A5A;\" [innerHTML]=\"productInfo.product_desc_st\" class=\"description\"></p>\n        </ion-item>\n      </ion-item-group>\n    </ion-card>\n  </ng-template>\n  <ng-template #noDetails>\n      <p style=\"padding: 0px 10px;\">Loading</p>\n  </ng-template>\n</ion-content>\n<ion-footer>\n  <ion-button expand=\"full\" color=\"primary\" (click)=\"purchase()\">\n    <ion-label>Purchase Now</ion-label>\n    <ion-icon name=\"cart\"></ion-icon>\n    <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n  </ion-button>\n</ion-footer>"
 
 /***/ }),
 
@@ -89,8 +89,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/services/auth.service.ts");
 /* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/product.service */ "./src/app/services/product.service.ts");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _services_order_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/order.service */ "./src/app/services/order.service.ts");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_7__);
+
 
 
 
@@ -99,13 +101,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ProductDetailsPage = /** @class */ (function () {
-    function ProductDetailsPage(navCtrl, loadingController, activatedRoute, router, auth, productService) {
+    function ProductDetailsPage(navCtrl, loadingController, activatedRoute, router, auth, productService, orderService) {
         this.navCtrl = navCtrl;
         this.loadingController = loadingController;
         this.activatedRoute = activatedRoute;
         this.router = router;
         this.auth = auth;
         this.productService = productService;
+        this.orderService = orderService;
         this.slideOpts = {
             initialSlide: 0,
             speed: 400
@@ -135,44 +138,35 @@ var ProductDetailsPage = /** @class */ (function () {
     ProductDetailsPage.prototype.purchase = function () {
         var _this = this;
         this.auth.isGuest()
-            .then(function (userIsGuest_bl) {
-            if (userIsGuest_bl == true) {
-                sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.fire({
-                    title: "Guest",
-                    html: "To purchase the item<br/>Kindly login to an account first",
-                    type: "info",
-                    showCancelButton: true,
-                    confirmButtonText: "Ok, Login Now",
-                    cancelButtonText: "Return"
-                }).then(function (result) {
-                    if (result.value) {
-                        _this.auth.logoutUser();
-                    }
-                    else {
-                        console.log("User cancels purchase and login");
-                    }
-                });
-            }
-            else {
-                // Swal.fire({
-                //   title: "Confirmation",
-                //   text: "Confirm purchase of this item?",
-                //   type: "question",
-                //   showCancelButton: true,
-                //   confirmButtonText: "Yes, Confirm",
-                //   cancelButtonText: "No"
-                // }).then((result) => {
-                //   if(result.value) {
-                //     // sends parameters to purchase page
-                //     let product_id = this.activatedRoute.snapshot.paramMap.get('id');
-                //     this.navCtrl.navigateRoot("/checkout/" + product_id);
-                //   }
-                // });
-                // sends parameters to purchase page
-                var product_id = _this.activatedRoute.snapshot.paramMap.get('id');
-                _this.navCtrl.navigateRoot("/checkout/" + product_id);
-            }
-        })
+            .then(function (userIsGuest_bl) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+            var product_id;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                if (userIsGuest_bl == true) {
+                    sweetalert2__WEBPACK_IMPORTED_MODULE_7___default.a.fire({
+                        title: "Guest",
+                        html: "To purchase the item<br/>Kindly login to an account first",
+                        type: "info",
+                        showCancelButton: true,
+                        confirmButtonText: "Ok, Login Now",
+                        cancelButtonText: "Return"
+                    }).then(function (result) {
+                        if (result.value) {
+                            _this.auth.logoutUser();
+                        }
+                        else {
+                            console.log("User cancels purchase and login");
+                        }
+                    });
+                }
+                else {
+                    this.orderService.removeAnyExistingOrder();
+                    product_id = this.activatedRoute.snapshot.paramMap.get('id');
+                    this.navCtrl.navigateRoot("/checkout/" + product_id);
+                }
+                return [2 /*return*/];
+            });
+        }); })
             .catch(function (error) {
             console.log(error);
         });
@@ -236,7 +230,8 @@ var ProductDetailsPage = /** @class */ (function () {
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
         { type: _services_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"] },
-        { type: _services_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"] }
+        { type: _services_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"] },
+        { type: _services_order_service__WEBPACK_IMPORTED_MODULE_6__["OrderService"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["IonHeader"], null),
@@ -253,7 +248,8 @@ var ProductDetailsPage = /** @class */ (function () {
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
             _services_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"],
-            _services_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"]])
+            _services_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"],
+            _services_order_service__WEBPACK_IMPORTED_MODULE_6__["OrderService"]])
     ], ProductDetailsPage);
     return ProductDetailsPage;
 }());
