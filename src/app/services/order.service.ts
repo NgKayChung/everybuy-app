@@ -23,38 +23,10 @@ export class OrderService {
   private BASE_ORDER_API_URL = AppConfig.API_HOST_URL + "/api/orders";
   private GET_SHIPPING_OPTS_API_URL = AppConfig.API_HOST_URL + "/api/shipping-options";
   private DELIVERY_ADDRESS_CREATE_API_URL = this.BASE_DELIVERY_ADDRESS_API_URL + "/create";
-  private GET_ORDER_HISTORY_API_URL = this.BASE_ORDER_API_URL + "/history";
   private ORDER_CREATE_API_URL = this.BASE_ORDER_API_URL + "/create";
   private ORDER_UPDATE_API_URL = this.BASE_ORDER_API_URL + "/update";
-  private ORDER_REMOVE_API_URL = this.BASE_ORDER_API_URL + "/remove";
 
   constructor(private storage: Storage, private httpClient: HttpClient, private auth: AuthService) { }
-
-  getUserLastOrder(limit?: number) {
-    return new Promise((resolve, reject) => {
-      this.auth.getUID()
-        .then((uid_st) => {
-          let body = {};
-          if(!isNaN(limit)) {
-            body["limit"] = limit;
-          }
-          this.httpClient.post(this.GET_ORDER_HISTORY_API_URL, body, { headers: new HttpHeaders(`Authorization: Bearer ${ uid_st }`) })
-            .subscribe((response: API_ORDER_DATA_RESPONSE) => {
-              if(response.code == 20) {
-                resolve(response.data);
-              }
-              else {
-                reject(response.message);
-              }
-            }, error => {
-              reject("Error in getting data");
-            });
-        })
-        .catch((error) => {
-          reject("Unable to get data");
-        });
-    });
-  }
 
   getDeliveryAddresses(id? : string) {
     return new Promise((resolve, reject) => {
@@ -202,7 +174,10 @@ export class OrderService {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
         .then((uid_st) => {
-          this.httpClient.post(`${ this.BASE_ORDER_API_URL }/${ orderId }`, "", { headers: new HttpHeaders(`Authorization: Bearer ${ uid_st }`) })
+          let body = {};
+          if(orderId)
+            body = { id: orderId };
+          this.httpClient.post(`${ this.BASE_ORDER_API_URL }`, body, { headers: new HttpHeaders(`Authorization: Bearer ${ uid_st }`) })
             .subscribe((response: API_ORDER_DATA_RESPONSE) => {
               if(response.code == 20) {
                 resolve(response.data);

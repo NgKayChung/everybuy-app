@@ -98,14 +98,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let PaymentPage = class PaymentPage {
-    constructor(toastCtrl, route, orderService, nfcService, paymentService) {
+    constructor(loadingCtrl, toastCtrl, navCtrl, route, orderService, nfcService, paymentService) {
+        this.loadingCtrl = loadingCtrl;
         this.toastCtrl = toastCtrl;
+        this.navCtrl = navCtrl;
         this.route = route;
         this.orderService = orderService;
         this.nfcService = nfcService;
         this.paymentService = paymentService;
     }
     ngOnInit() {
+    }
+    presentLoading() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            const loading = yield this.loadingCtrl.create({
+                message: 'Processing Payment'
+            });
+            yield loading.present();
+        });
     }
     presentToast(message) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
@@ -118,6 +128,11 @@ let PaymentPage = class PaymentPage {
         });
     }
     ionViewWillEnter() {
+        // initialize input fields
+        this.cardNumber_st = "";
+        this.expMonth_st = "";
+        this.expYear_st = "";
+        this.cvc_st = "";
         this.route.queryParams.subscribe(params => {
             this.orderId = params["order_id"];
             this.orderService.getOrderDetails(this.orderId)
@@ -126,7 +141,7 @@ let PaymentPage = class PaymentPage {
                 this.amountPayable_nm = data['total_amount_nm'];
             })
                 .catch((error) => {
-                console.log(error);
+                this.presentToast(error);
             });
         });
         this.nfcService.isEnabled()
@@ -147,7 +162,6 @@ let PaymentPage = class PaymentPage {
             this.cvc_st = prompt("Please fill in the card CVC");
         })
             .catch((error) => {
-            console.log(error);
             this.presentToast(error);
         });
     }
@@ -157,26 +171,36 @@ let PaymentPage = class PaymentPage {
         this.nfcService.close();
     }
     processPayment() {
+        this.presentLoading();
         let card_obj = {
             number: this.cardNumber_st,
             expMonth: parseInt(this.expMonth_st),
             expYear: parseInt(this.expYear_st),
             cvc: this.cvc_st
         };
-        console.log("user card", card_obj);
         this.paymentService.makePayment(this.orderId, card_obj)
-            .then((data) => {
-            console.log(data);
+            .then(() => {
+            this.loadingCtrl.dismiss();
             this.presentToast("Payment Successful!");
+            let navigationExtras = {
+                queryParams: {
+                    order_id: this.orderId
+                }
+            };
+            this.navCtrl.navigateForward('/payment/payment-complete', navigationExtras);
         })
             .catch((error) => {
-            console.log(error);
+            setTimeout(() => {
+                this.loadingCtrl.dismiss();
+            }, 2000);
             this.presentToast(error);
         });
     }
 };
 PaymentPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
     { type: _services_order_service__WEBPACK_IMPORTED_MODULE_5__["OrderService"] },
     { type: _services_nfc_service__WEBPACK_IMPORTED_MODULE_6__["NfcService"] },
@@ -188,7 +212,13 @@ PaymentPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         template: __webpack_require__(/*! raw-loader!./payment.page.html */ "./node_modules/raw-loader/index.js!./src/app/pages/payment/payment.page.html"),
         styles: [__webpack_require__(/*! ./payment.page.scss */ "./src/app/pages/payment/payment.page.scss")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _services_order_service__WEBPACK_IMPORTED_MODULE_5__["OrderService"], _services_nfc_service__WEBPACK_IMPORTED_MODULE_6__["NfcService"], _services_payment_service__WEBPACK_IMPORTED_MODULE_7__["PaymentService"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"],
+        _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
+        _services_order_service__WEBPACK_IMPORTED_MODULE_5__["OrderService"],
+        _services_nfc_service__WEBPACK_IMPORTED_MODULE_6__["NfcService"],
+        _services_payment_service__WEBPACK_IMPORTED_MODULE_7__["PaymentService"]])
 ], PaymentPage);
 
 
@@ -366,7 +396,6 @@ let PaymentService = class PaymentService {
                 };
                 this.stripe.createCardToken(card_obj)
                     .then((token) => {
-                    console.log(token.id);
                     let body = {
                         "orderId": orderId,
                         "tokenId": token.id
@@ -374,7 +403,7 @@ let PaymentService = class PaymentService {
                     this.httpClient.post(this.BASE_PAYMENT_API_URL, body, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](`Authorization: Bearer ${uid_st}`) })
                         .subscribe((response) => {
                         if (response.code == 20) {
-                            resolve(response.data);
+                            resolve();
                         }
                         else {
                             reject(response.message);
@@ -384,7 +413,7 @@ let PaymentService = class PaymentService {
                     });
                 })
                     .catch((error) => {
-                    reject(error);
+                    reject("Payment method not supported");
                 });
             })
                 .catch((error) => {

@@ -1,4 +1,7 @@
-.welcome-card img {
-  max-height: 35vh;
-  overflow: hidden;
+ion-content {
+    --background: #F1F1F1;
+}
+
+ion-card {
+    margin: 10px 0px;
 }

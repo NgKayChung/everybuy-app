@@ -119,16 +119,20 @@ var CheckoutPage = /** @class */ (function () {
             .catch(function (error) {
             console.log(error);
         });
-        this.orderService.getUserLastOrder(1)
+        this.orderService.getDeliveryAddresses()
             .then(function (delivery_address) {
-            _this.selectedDeliveryAddress = delivery_address[0];
+            if (delivery_address) {
+                _this.selectedDeliveryAddress = delivery_address[0];
+            }
         })
             .catch(function (error) {
             console.log(error);
         });
         this.orderService.getShippingOptions()
             .then(function (shipping_options) {
-            _this.selectedShippingOption = shipping_options[0];
+            if (shipping_options) {
+                _this.selectedShippingOption = shipping_options[0];
+            }
         })
             .catch(function (error) {
             console.log(error);
@@ -198,7 +202,6 @@ var CheckoutPage = /** @class */ (function () {
         var _this = this;
         this.orderService.createOrder(this.productInfo.product_id, this.selectedDeliveryAddress.delivery_id, this.selectedShippingOption.shipping_id)
             .then(function (response_orderId) {
-            _this.navCtrl.navigateRoot("/payment");
             var navigationExtras = {
                 queryParams: {
                     order_id: response_orderId

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
 import { NavController, IonDatetime } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import * as moment from 'moment';
+
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-payment-complete',
@@ -8,27 +12,42 @@ import { NavController, IonDatetime } from '@ionic/angular';
   styleUrls: ['./payment-complete.page.scss'],
 })
 export class PaymentCompletePage implements OnInit {
-  public receiptURL: string;
+  public receiptURL_st: string;
   public orderID: string;
-  public orderTime: string;
+  public orderTime_st: string;
   public totalAmount_nm: number;
   public cardNo_st: string;
 
-  constructor(private navCtrl: NavController) { }
+  constructor(
+    private navCtrl: NavController,
+    private activatedRoute: ActivatedRoute,
+    private iab: InAppBrowser,
+    private orderService: OrderService
+  ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
-    this.receiptURL = "https://pay.stripe.com/receipts/acct_1FO1uAKKU5hK9fS0/ch_1FfMQjKKU5hK9fS0Ftt4oNIo/rcpt_GBju5OA7YtrgBdVeJaaVHclvtcQyzbG";
-    this.orderID = "T20191101-000001";
-    this.orderTime = "01/11/2019 10:51pm";
-    this.totalAmount_nm = 15.90;
-    this.cardNo_st = "4242";
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.orderID = params["order_id"];
+      this.orderService.getOrderDetails(this.orderID)
+        .then((data) => {
+          this.orderTime_st = (data["payment_time"] == null ? "-" : moment(new Date(data["payment_time"])).format("DD/MM/YYYY hh:mma"));
+          this.totalAmount_nm = data["total_amount_nm"];
+          this.cardNo_st = (data["last4_card_no_st"] == null ? "-" : "xxxxxxxxxxxx" + data["last4_card_no_st"]);
+          this.receiptURL_st = data["receipt_url_st"];
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   viewReceipt() {
-    console.log("view receipt in browser/in-app");
+    if(this.receiptURL_st && this.receiptURL_st != null) {
+      const browser = this.iab.create(this.receiptURL_st);
+    }
   }
 
   doneBackToHome() {

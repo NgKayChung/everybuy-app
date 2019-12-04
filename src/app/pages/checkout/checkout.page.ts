@@ -39,9 +39,11 @@ export class CheckoutPage implements OnInit {
         console.log(error);
       });
     
-    this.orderService.getUserLastOrder(1)
+    this.orderService.getDeliveryAddresses()
       .then((delivery_address) => {
-        this.selectedDeliveryAddress = delivery_address[0];
+        if(delivery_address) {
+          this.selectedDeliveryAddress = delivery_address[0];
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -49,7 +51,9 @@ export class CheckoutPage implements OnInit {
     
     this.orderService.getShippingOptions()
       .then((shipping_options) => {
-        this.selectedShippingOption = shipping_options[0];
+        if(shipping_options) {
+          this.selectedShippingOption = shipping_options[0];
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -101,7 +105,6 @@ export class CheckoutPage implements OnInit {
   placeOrder() {
     this.orderService.createOrder(this.productInfo.product_id, this.selectedDeliveryAddress.delivery_id, this.selectedShippingOption.shipping_id)
       .then((response_orderId) => {
-        this.navCtrl.navigateRoot("/payment");
         let navigationExtras: NavigationExtras = {
           queryParams: {
               order_id: response_orderId

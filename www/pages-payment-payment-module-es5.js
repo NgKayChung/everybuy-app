@@ -101,14 +101,34 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var PaymentPage = /** @class */ (function () {
-    function PaymentPage(toastCtrl, route, orderService, nfcService, paymentService) {
+    function PaymentPage(loadingCtrl, toastCtrl, navCtrl, route, orderService, nfcService, paymentService) {
+        this.loadingCtrl = loadingCtrl;
         this.toastCtrl = toastCtrl;
+        this.navCtrl = navCtrl;
         this.route = route;
         this.orderService = orderService;
         this.nfcService = nfcService;
         this.paymentService = paymentService;
     }
     PaymentPage.prototype.ngOnInit = function () {
+    };
+    PaymentPage.prototype.presentLoading = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var loading;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadingCtrl.create({
+                            message: 'Processing Payment'
+                        })];
+                    case 1:
+                        loading = _a.sent();
+                        return [4 /*yield*/, loading.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     PaymentPage.prototype.presentToast = function (message) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -130,6 +150,11 @@ var PaymentPage = /** @class */ (function () {
     };
     PaymentPage.prototype.ionViewWillEnter = function () {
         var _this = this;
+        // initialize input fields
+        this.cardNumber_st = "";
+        this.expMonth_st = "";
+        this.expYear_st = "";
+        this.cvc_st = "";
         this.route.queryParams.subscribe(function (params) {
             _this.orderId = params["order_id"];
             _this.orderService.getOrderDetails(_this.orderId)
@@ -138,7 +163,7 @@ var PaymentPage = /** @class */ (function () {
                 _this.amountPayable_nm = data['total_amount_nm'];
             })
                 .catch(function (error) {
-                console.log(error);
+                _this.presentToast(error);
             });
         });
         this.nfcService.isEnabled()
@@ -160,7 +185,6 @@ var PaymentPage = /** @class */ (function () {
             _this.cvc_st = prompt("Please fill in the card CVC");
         })
             .catch(function (error) {
-            console.log(error);
             _this.presentToast(error);
         });
     };
@@ -171,25 +195,35 @@ var PaymentPage = /** @class */ (function () {
     };
     PaymentPage.prototype.processPayment = function () {
         var _this = this;
+        this.presentLoading();
         var card_obj = {
             number: this.cardNumber_st,
             expMonth: parseInt(this.expMonth_st),
             expYear: parseInt(this.expYear_st),
             cvc: this.cvc_st
         };
-        console.log("user card", card_obj);
         this.paymentService.makePayment(this.orderId, card_obj)
-            .then(function (data) {
-            console.log(data);
+            .then(function () {
+            _this.loadingCtrl.dismiss();
             _this.presentToast("Payment Successful!");
+            var navigationExtras = {
+                queryParams: {
+                    order_id: _this.orderId
+                }
+            };
+            _this.navCtrl.navigateForward('/payment/payment-complete', navigationExtras);
         })
             .catch(function (error) {
-            console.log(error);
+            setTimeout(function () {
+                _this.loadingCtrl.dismiss();
+            }, 2000);
             _this.presentToast(error);
         });
     };
     PaymentPage.ctorParameters = function () { return [
+        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"] },
         { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"] },
+        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] },
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
         { type: _services_order_service__WEBPACK_IMPORTED_MODULE_5__["OrderService"] },
         { type: _services_nfc_service__WEBPACK_IMPORTED_MODULE_6__["NfcService"] },
@@ -201,7 +235,13 @@ var PaymentPage = /** @class */ (function () {
             template: __webpack_require__(/*! raw-loader!./payment.page.html */ "./node_modules/raw-loader/index.js!./src/app/pages/payment/payment.page.html"),
             styles: [__webpack_require__(/*! ./payment.page.scss */ "./src/app/pages/payment/payment.page.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _services_order_service__WEBPACK_IMPORTED_MODULE_5__["OrderService"], _services_nfc_service__WEBPACK_IMPORTED_MODULE_6__["NfcService"], _services_payment_service__WEBPACK_IMPORTED_MODULE_7__["PaymentService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
+            _services_order_service__WEBPACK_IMPORTED_MODULE_5__["OrderService"],
+            _services_nfc_service__WEBPACK_IMPORTED_MODULE_6__["NfcService"],
+            _services_payment_service__WEBPACK_IMPORTED_MODULE_7__["PaymentService"]])
     ], PaymentPage);
     return PaymentPage;
 }());
@@ -385,7 +425,6 @@ var PaymentService = /** @class */ (function () {
                 };
                 _this.stripe.createCardToken(card_obj)
                     .then(function (token) {
-                    console.log(token.id);
                     var body = {
                         "orderId": orderId,
                         "tokenId": token.id
@@ -393,7 +432,7 @@ var PaymentService = /** @class */ (function () {
                     _this.httpClient.post(_this.BASE_PAYMENT_API_URL, body, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
                         .subscribe(function (response) {
                         if (response.code == 20) {
-                            resolve(response.data);
+                            resolve();
                         }
                         else {
                             reject(response.message);
@@ -403,7 +442,7 @@ var PaymentService = /** @class */ (function () {
                     });
                 })
                     .catch(function (error) {
-                    reject(error);
+                    reject("Payment method not supported");
                 });
             })
                 .catch(function (error) {

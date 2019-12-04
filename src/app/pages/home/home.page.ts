@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 
+import { ModalController } from '@ionic/angular';
+
 import { AuthService } from '../../services/auth.service';
 import { ProductService } from '../../services/product.service';
+
+import { FilterProductModalPage } from '../../modals/filter-product-modal/filter-product-modal.page';
 
 @Component({
   selector: 'app-home',
@@ -11,10 +15,12 @@ import { ProductService } from '../../services/product.service';
 })
 export class HomePage {
   public products: any;
-  private offset: number = 0;
 
-  constructor(private authService: AuthService, private productService: ProductService) {
-  }
+  constructor(
+    private modalController: ModalController,
+    private authService: AuthService,
+    private productService: ProductService
+  ) {}
 
   ionViewWillEnter() {
     this.products = {};
@@ -25,7 +31,6 @@ export class HomePage {
     let value = e.detail.value;
   
     if (value == '') {
-      this.offset = 0;
       this.retrieveProducts();
       return;
     }
@@ -47,5 +52,19 @@ export class HomePage {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  async filterProduct() {
+    const modal = await this.modalController.create({
+      component: FilterProductModalPage,
+    });
+
+    modal.onDidDismiss()
+      .then((products_data) => {
+        if(products_data.data.filteredProducts) {
+          this.products = products_data.data.filteredProducts;
+        }
+      });
+    return await modal.present();
   }
 }

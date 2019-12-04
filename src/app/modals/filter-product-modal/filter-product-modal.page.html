@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button color="secondary" fill="clear" (click)="dismissModal()">
+        <ion-icon name="arrow-back" style="font-size: 20pt;"></ion-icon>
+      </ion-button>
+      <ion-title>Search Filter</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <h4>Sort by</h4>
+      </ion-row>
+      <ion-row id="sort">
+        <ion-col size="6">
+          <ion-button [attr.data-id]="'1'" [attr.data-value]="'TOPSALES'" text-capitalize="false" expand="full" color="light" (click)="selectSorting(1)">
+            Top Sales
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button [attr.data-id]="'2'" [attr.data-value]="'PLOWHIGH'" text-capitalize="false" expand="full" color="light" (click)="selectSorting(2)">
+            Price: Low to High
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button [attr.data-id]="'3'" [attr.data-value]="'PHIGHLOW'" text-capitalize="false" expand="full" color="light" (click)="selectSorting(3)">
+            Price: High to Low
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <h4>Categories</h4>
+      </ion-row>
+      <ion-row id="category">
+        <ng-template [ngIf]="productCategories && productCategories.length > 0">
+          <ion-col size="6" *ngFor="let productCategory of productCategories; let i = index;">
+            <ion-button [attr.data-id]="i" [attr.data-value]="productCategory.category" text-capitalize="false" expand="full" color="light" (click)="selectCategory(i)">
+              {{ productCategory.category }}
+            </ion-button>
+          </ion-col>
+        </ng-template>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <h4>Price Range(RM)</h4>
+      </ion-row>
+      <ion-row>
+        <ion-col size="5">
+          <ion-label position="stacked">Min:</ion-label>
+          <ion-input type="number" [(ngModel)]="minPrice_nm" placeholder="MIN"></ion-input>
+        </ion-col>
+        <ion-col size="2" style="align-self: center; text-align: center;">
+          -
+        </ion-col>
+        <ion-col size="5">
+          <ion-label position="stacked">Max:</ion-label>
+          <ion-input type="number" [(ngModel)]="maxPrice_nm" placeholder="MAX"></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <div class="ion-text-center" style="margin: 2rem 0px;">
+    <ion-button shape="round" color="success" style="width: 40%; margin: 0px 1rem;" (click)="applyFilter()">Apply Filter</ion-button>
+    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    <ion-button shape="round" color="danger" style="width: 30%; margin: 0px 1rem;" (click)="clearFilter()">Reset</ion-button>
+    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+  </div>
+</ion-content>

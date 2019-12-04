@@ -15,16 +15,20 @@ const routes: Routes = [
     loadChildren: './pages/home/home.module#HomePageModule'
   },
   {
-    path: 'list',
-    loadChildren: './pages/list/list.module#ListPageModule'
+    path: 'preference',
+    loadChildren: './pages/preference/preference.module#PreferencePageModule'
   },
   {
     path: 'profile',
     loadChildren: './pages/profile/profile.module#ProfilePageModule'
   },
   {
-    path: 'nfc',
-    loadChildren: './pages/nfc/nfc.module#NFCPageModule'
+    path: 'about',
+    loadChildren: './pages/about/about.module#AboutPageModule'
+  },
+  {
+    path: 'filter-product-modal',
+    loadChildren: './modals/filter-product-modal/filter-product-modal.module#FilterProductModalPageModule'
   },
   {
     path: 'product-details/:id',

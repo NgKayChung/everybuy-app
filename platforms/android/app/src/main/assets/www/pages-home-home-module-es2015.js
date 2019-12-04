@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"secondary\">\n    <ion-buttons slot=\"start\">\n    </ion-buttons>\n    <ion-title>Home</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-toolbar>\n    <ion-searchbar placeholder=\"Search by Product Name\" style=\"width: 90%; margin: auto;\" slot=\"start\" (ionChange)=\"onSearchChange($event)\"></ion-searchbar>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\">\n        <ion-icon name=\"funnel\"></ion-icon>\n        <label>Filter</label>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n  <ng-template [ngIf]=\"products && products.length > 0\" [ngIfElse]=\"noProduct\">\n    <!-- <ion-list>\n      <ion-item class=\"item-thumbnail-left\" *ngFor=\"let product of products\"  [routerLink]=\"['/product-details']\">\n        <ion-img class=\"image\" src=\"product.image_urls_st.split(',')[0]\"></ion-img>\n        <div class=\"item-info\">\n          <p class=\"prod-name\">\n            {{product.product_name_st}}\n          </p>\n          <p class=\"price\">\n            RM {{product.product_price_nm.toFixed(2)}}\n          </p>\n        </div>\n      </ion-item>\n    </ion-list> -->\n    <ion-virtual-scroll [items]=\"products\" approxItemHeight=\"320px\">\n      <ion-item class=\"item-thumbnail-left\" *virtualItem=\"let product;\" [routerLink]=\"['/product-details/' + product.product_id]\">\n        <ion-img class=\"image\" [src]=\"product.thumbnail_image_st\"></ion-img>\n        <div class=\"item-info\">\n          <p class=\"prod-name\">\n            {{product.product_name_st}}\n          </p>\n          <p class=\"price\">\n            RM {{product.product_price_nm.toFixed(2)}}\n          </p>\n        </div>\n      </ion-item>\n    </ion-virtual-scroll>\n  </ng-template>\n  <ng-template #noProduct>\n    <p style=\"padding: 0px 10px;\">No available product</p>\n  </ng-template>\n  <!-- <ion-buttons>\n    <ion-button [routerLink]=\"['/list']\">\n      <ion-label>List</ion-label>\n      <ion-icon name=\"information-circle\"></ion-icon>\n    </ion-button>\n  </ion-buttons> -->\n</ion-content>\n<app-tabs></app-tabs>"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"secondary\">\n    <ion-buttons slot=\"start\">\n    </ion-buttons>\n    <ion-title>Home</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-toolbar>\n    <ion-searchbar placeholder=\"Search by Product Name\" style=\"width: 90%; margin: auto;\" slot=\"start\" (ionChange)=\"onSearchChange($event)\"></ion-searchbar>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"filterProduct()\">\n        <ion-icon name=\"funnel\"></ion-icon>\n        <label>Filter</label>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n  <ng-template [ngIf]=\"products && products.length > 0\" [ngIfElse]=\"noProduct\">\n    <ion-virtual-scroll [items]=\"products\" approxItemHeight=\"320px\">\n      <ion-item class=\"item-thumbnail-left\" *virtualItem=\"let product;\" [routerLink]=\"['/product-details/' + product.product_id]\">\n        <ion-img class=\"image\" [src]=\"product.thumbnail_image_st\"></ion-img>\n        <div class=\"item-info\">\n          <p class=\"prod-name\">\n            {{product.product_name_st}}\n          </p>\n          <p class=\"price\">\n            RM {{product.product_price_nm.toFixed(2)}}\n          </p>\n        </div>\n      </ion-item>\n    </ion-virtual-scroll>\n  </ng-template>\n  <ng-template #noProduct>\n    <p style=\"padding: 0px 10px;\">No product found</p>\n  </ng-template>\n</ion-content>\n<app-tabs></app-tabs>"
 
 /***/ }),
 
@@ -85,17 +85,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomePage", function() { return HomePage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/services/auth.service.ts");
-/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var _modals_filter_product_modal_filter_product_modal_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../modals/filter-product-modal/filter-product-modal.page */ "./src/app/modals/filter-product-modal/filter-product-modal.page.ts");
+
+
 
 
 
 
 let HomePage = class HomePage {
-    constructor(authService, productService) {
+    constructor(modalController, authService, productService) {
+        this.modalController = modalController;
         this.authService = authService;
         this.productService = productService;
-        this.offset = 0;
     }
     ionViewWillEnter() {
         this.products = {};
@@ -104,7 +108,6 @@ let HomePage = class HomePage {
     onSearchChange(e) {
         let value = e.detail.value;
         if (value == '') {
-            this.offset = 0;
             this.retrieveProducts();
             return;
         }
@@ -125,19 +128,36 @@ let HomePage = class HomePage {
             console.log(error);
         });
     }
+    filterProduct() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            const modal = yield this.modalController.create({
+                component: _modals_filter_product_modal_filter_product_modal_page__WEBPACK_IMPORTED_MODULE_5__["FilterProductModalPage"],
+            });
+            modal.onDidDismiss()
+                .then((products_data) => {
+                if (products_data.data.filteredProducts) {
+                    this.products = products_data.data.filteredProducts;
+                }
+            });
+            return yield modal.present();
+        });
+    }
 };
 HomePage.ctorParameters = () => [
-    { type: _services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"] },
-    { type: _services_product_service__WEBPACK_IMPORTED_MODULE_3__["ProductService"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"] },
+    { type: _services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
+    { type: _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"] }
 ];
 HomePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-home',
         template: __webpack_require__(/*! raw-loader!./home.page.html */ "./node_modules/raw-loader/index.js!./src/app/pages/home/home.page.html"),
-        providers: [_services_product_service__WEBPACK_IMPORTED_MODULE_3__["ProductService"]],
+        providers: [_services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"]],
         styles: [__webpack_require__(/*! ./home.page.scss */ "./src/app/pages/home/home.page.scss")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"], _services_product_service__WEBPACK_IMPORTED_MODULE_3__["ProductService"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"],
+        _services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"],
+        _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"]])
 ], HomePage);
 
 

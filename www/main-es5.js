@@ -14,30 +14,23 @@ var map = {
 	"./modals/delivery-modal/delivery-modal.module": [
 		"./src/app/modals/delivery-modal/delivery-modal.module.ts"
 	],
+	"./modals/filter-product-modal/filter-product-modal.module": [
+		"./src/app/modals/filter-product-modal/filter-product-modal.module.ts"
+	],
 	"./modals/shipping-modal/shipping-modal.module": [
 		"./src/app/modals/shipping-modal/shipping-modal.module.ts"
 	],
 	"./pages/checkout/checkout.module": [
 		"./src/app/pages/checkout/checkout.module.ts",
-		"common",
 		"pages-checkout-checkout-module"
 	],
 	"./pages/home/home.module": [
 		"./src/app/pages/home/home.module.ts",
-		"common",
 		"pages-home-home-module"
-	],
-	"./pages/list/list.module": [
-		"./src/app/pages/list/list.module.ts",
-		"pages-list-list-module"
 	],
 	"./pages/login/login.module": [
 		"./src/app/pages/login/login.module.ts",
 		"pages-login-login-module"
-	],
-	"./pages/nfc/nfc.module": [
-		"./src/app/pages/nfc/nfc.module.ts",
-		"pages-nfc-nfc-module"
 	],
 	"./pages/payment-complete/payment-complete.module": [
 		"./src/app/pages/payment-complete/payment-complete.module.ts",
@@ -49,7 +42,6 @@ var map = {
 	],
 	"./pages/product-details/product-details.module": [
 		"./src/app/pages/product-details/product-details.module.ts",
-		"common",
 		"pages-product-details-product-details-module"
 	],
 	"./pages/profile/profile.module": [
@@ -522,7 +514,7 @@ module.exports = "<ion-tabs></ion-tabs>"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"home\">\n        <ion-icon name=\"home\"></ion-icon>\n        <ion-label>Home</ion-label>\n    </ion-tab-button>\n    <!-- <ion-tab-button tab=\"nfc\">\n        <ion-icon name=\"list-box\"></ion-icon>\n        <ion-label>Purchases</ion-label>\n    </ion-tab-button> -->\n    <ion-tab-button tab=\"profile\">\n        <ion-icon name=\"person\"></ion-icon>\n        <ion-label>Profile</ion-label>\n    </ion-tab-button>\n</ion-tab-bar>"
+module.exports = "<ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"home\">\n        <ion-icon name=\"home\"></ion-icon>\n        <ion-label>Home</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"profile\">\n        <ion-icon name=\"person\"></ion-icon>\n        <ion-label>Profile</ion-label>\n    </ion-tab-button>\n</ion-tab-bar>"
 
 /***/ }),
 
@@ -545,6 +537,17 @@ module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons>\n      <ion-b
 /***/ (function(module, exports) {
 
 module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons>\n      <ion-button color=\"secondary\" fill=\"clear\" (click)=\"dismissModal()\">\n        <ion-icon name=\"arrow-back\" style=\"font-size: 20pt;\"></ion-icon>\n      </ion-button>\n      <ion-title>Delivery Address Selection</ion-title>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ng-template [ngIf]=\"deliveryAddresses && deliveryAddresses.length > 0\">\n    <ion-card *ngFor=\"let deliveryAddress of deliveryAddresses\">\n      <ion-item lines=\"none\" [ngClass]=\"selectedDeliveryId === deliveryAddress.delivery_id ? 'selected': ''\" class=\"delivery-select\" (click)=\"selectDeliveryAddress(deliveryAddress.delivery_id)\" [attr.data-id]=\"deliveryAddress.delivery_id\">\n        <ion-label class=\"ion-text-wrap\" style=\"color: #4E4E4E; font-family: sans-serif;\">\n          <ion-text>{{deliveryAddress.rec_name_st}}</ion-text>\n          <br/>\n          <label>{{deliveryAddress.rec_phone_st}}</label>\n          <br/>\n          <ion-text>\n            <label>{{deliveryAddress.address1_st + \", \" + (deliveryAddress.address2_st == null ? \"\" : deliveryAddress.address2_st + \", \") + deliveryAddress.zipcode_st + \" \" + deliveryAddress.state_st}}</label>\n          </ion-text>\n        </ion-label>\n        <ion-icon name=\"checkmark\" size=\"small\"></ion-icon>\n      </ion-item>\n    </ion-card>\n  </ng-template>\n  <ion-card>\n    <ion-item lines=\"none\" detail=true (click)=\"presentAddDeliveryModal()\">\n      <ion-label>Add new delivery address</ion-label>\n    </ion-item>\n  </ion-card>\n</ion-content>"
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/modals/filter-product-modal/filter-product-modal.page.html":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/modals/filter-product-modal/filter-product-modal.page.html ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons>\n      <ion-button color=\"secondary\" fill=\"clear\" (click)=\"dismissModal()\">\n        <ion-icon name=\"arrow-back\" style=\"font-size: 20pt;\"></ion-icon>\n      </ion-button>\n      <ion-title>Search Filter</ion-title>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-item lines=\"full\">\n    <ion-grid>\n      <ion-row>\n        <h4>Sort by</h4>\n      </ion-row>\n      <ion-row id=\"sort\">\n        <ion-col size=\"6\">\n          <ion-button [attr.data-id]=\"'1'\" [attr.data-value]=\"'TOPSALES'\" text-capitalize=\"false\" expand=\"full\" color=\"light\" (click)=\"selectSorting(1)\">\n            Top Sales\n          </ion-button>\n        </ion-col>\n        <ion-col size=\"6\">\n          <ion-button [attr.data-id]=\"'2'\" [attr.data-value]=\"'PLOWHIGH'\" text-capitalize=\"false\" expand=\"full\" color=\"light\" (click)=\"selectSorting(2)\">\n            Price: Low to High\n          </ion-button>\n        </ion-col>\n        <ion-col size=\"6\">\n          <ion-button [attr.data-id]=\"'3'\" [attr.data-value]=\"'PHIGHLOW'\" text-capitalize=\"false\" expand=\"full\" color=\"light\" (click)=\"selectSorting(3)\">\n            Price: High to Low\n          </ion-button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n  <ion-item lines=\"full\">\n    <ion-grid>\n      <ion-row>\n        <h4>Categories</h4>\n      </ion-row>\n      <ion-row id=\"category\">\n        <ng-template [ngIf]=\"productCategories && productCategories.length > 0\">\n          <ion-col size=\"6\" *ngFor=\"let productCategory of productCategories; let i = index;\">\n            <ion-button [attr.data-id]=\"i\" [attr.data-value]=\"productCategory.category\" text-capitalize=\"false\" expand=\"full\" color=\"light\" (click)=\"selectCategory(i)\">\n              {{ productCategory.category }}\n            </ion-button>\n          </ion-col>\n        </ng-template>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n  <ion-item lines=\"full\">\n    <ion-grid>\n      <ion-row>\n        <h4>Price Range(RM)</h4>\n      </ion-row>\n      <ion-row>\n        <ion-col size=\"5\">\n          <ion-label position=\"stacked\">Min:</ion-label>\n          <ion-input type=\"number\" [(ngModel)]=\"minPrice_nm\" placeholder=\"MIN\"></ion-input>\n        </ion-col>\n        <ion-col size=\"2\" style=\"align-self: center; text-align: center;\">\n          -\n        </ion-col>\n        <ion-col size=\"5\">\n          <ion-label position=\"stacked\">Max:</ion-label>\n          <ion-input type=\"number\" [(ngModel)]=\"maxPrice_nm\" placeholder=\"MAX\"></ion-input>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n  <div class=\"ion-text-center\" style=\"margin: 2rem 0px;\">\n    <ion-button shape=\"round\" color=\"success\" style=\"width: 40%; margin: 0px 1rem;\" (click)=\"applyFilter()\">Apply Filter</ion-button>\n    <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n    <ion-button shape=\"round\" color=\"danger\" style=\"width: 30%; margin: 0px 1rem;\" (click)=\"clearFilter()\">Reset</ion-button>\n    <ion-ripple-effect type=\"unbounded\"></ion-ripple-effect>\n  </div>\n</ion-content>"
 
 /***/ }),
 
@@ -589,16 +592,12 @@ var routes = [
         loadChildren: './pages/home/home.module#HomePageModule'
     },
     {
-        path: 'list',
-        loadChildren: './pages/list/list.module#ListPageModule'
-    },
-    {
         path: 'profile',
         loadChildren: './pages/profile/profile.module#ProfilePageModule'
     },
     {
-        path: 'nfc',
-        loadChildren: './pages/nfc/nfc.module#NFCPageModule'
+        path: 'filter-product-modal',
+        loadChildren: './modals/filter-product-modal/filter-product-modal.module#FilterProductModalPageModule'
     },
     {
         path: 'product-details/:id',
@@ -625,10 +624,13 @@ var routes = [
         loadChildren: './pages/payment/payment.module#PaymentPageModule'
     },
     {
+        path: 'payment/payment-complete',
+        loadChildren: './pages/payment-complete/payment-complete.module#PaymentCompletePageModule'
+    },
+    {
         path: '*',
         redirectTo: 'home'
-    },
-    { path: 'payment-complete', loadChildren: './pages/payment-complete/payment-complete.module#PaymentCompletePageModule' }
+    }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -711,7 +713,7 @@ var AppComponent = /** @class */ (function () {
                             })];
                     case 1:
                         _a.sent();
-                        // if yes, dismiss the modal
+                        // if yes, close the modal
                         if (currentModal != undefined) {
                             this.modalCtrl.dismiss();
                             return [2 /*return*/];
@@ -735,6 +737,9 @@ var AppComponent = /** @class */ (function () {
                     case 5:
                         if (view == "login" || view == "register") {
                             navigator['app'].exitApp(); // Exit app
+                        }
+                        else if (view == "payment-complete") {
+                            this.navCtrl.navigateRoot("/home");
                         }
                         else {
                             // go to previous page
@@ -798,7 +803,7 @@ var AppComponent = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppConfig", function() { return AppConfig; });
 var AppConfig = {
-    API_HOST_URL: "http://192.168.1.116:23634"
+    API_HOST_URL: "http://192.168.137.1:23634"
 };
 
 
@@ -826,13 +831,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_screen_orientation_ngx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic-native/screen-orientation/ngx */ "./node_modules/@ionic-native/screen-orientation/ngx/index.js");
 /* harmony import */ var _ionic_native_nfc_ngx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic-native/nfc/ngx */ "./node_modules/@ionic-native/nfc/ngx/index.js");
 /* harmony import */ var _ionic_native_stripe_ngx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic-native/stripe/ngx */ "./node_modules/@ionic-native/stripe/ngx/index.js");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _components_tabs_tabs_component_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/tabs/tabs.component.module */ "./src/app/components/tabs/tabs.component.module.ts");
-/* harmony import */ var _modals_delivery_modal_delivery_modal_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modals/delivery-modal/delivery-modal.module */ "./src/app/modals/delivery-modal/delivery-modal.module.ts");
-/* harmony import */ var _modals_add_delivery_modal_add_delivery_modal_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modals/add-delivery-modal/add-delivery-modal.module */ "./src/app/modals/add-delivery-modal/add-delivery-modal.module.ts");
-/* harmony import */ var _modals_shipping_modal_shipping_modal_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modals/shipping-modal/shipping-modal.module */ "./src/app/modals/shipping-modal/shipping-modal.module.ts");
+/* harmony import */ var _ionic_native_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic-native/in-app-browser/ngx */ "./node_modules/@ionic-native/in-app-browser/ngx/index.js");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _components_tabs_tabs_component_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/tabs/tabs.component.module */ "./src/app/components/tabs/tabs.component.module.ts");
+/* harmony import */ var _modals_filter_product_modal_filter_product_modal_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modals/filter-product-modal/filter-product-modal.module */ "./src/app/modals/filter-product-modal/filter-product-modal.module.ts");
+/* harmony import */ var _modals_delivery_modal_delivery_modal_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modals/delivery-modal/delivery-modal.module */ "./src/app/modals/delivery-modal/delivery-modal.module.ts");
+/* harmony import */ var _modals_add_delivery_modal_add_delivery_modal_module__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modals/add-delivery-modal/add-delivery-modal.module */ "./src/app/modals/add-delivery-modal/add-delivery-modal.module.ts");
+/* harmony import */ var _modals_shipping_modal_shipping_modal_module__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./modals/shipping-modal/shipping-modal.module */ "./src/app/modals/shipping-modal/shipping-modal.module.ts");
+
+
 
 
 
@@ -857,7 +866,7 @@ var AppModule = /** @class */ (function () {
     }
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"]],
+            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"]],
             entryComponents: [],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
@@ -867,22 +876,24 @@ var AppModule = /** @class */ (function () {
                     name: '__everybuydb',
                     driverOrder: ['indexeddb', 'sqlite', 'websql']
                 }),
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_14__["AppRoutingModule"],
-                _components_tabs_tabs_component_module__WEBPACK_IMPORTED_MODULE_15__["TabsModule"],
-                _modals_delivery_modal_delivery_modal_module__WEBPACK_IMPORTED_MODULE_16__["DeliveryModalPageModule"],
-                _modals_add_delivery_modal_add_delivery_modal_module__WEBPACK_IMPORTED_MODULE_17__["AddDeliveryModalPageModule"],
-                _modals_shipping_modal_shipping_modal_module__WEBPACK_IMPORTED_MODULE_18__["ShippingModalPageModule"]
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_15__["AppRoutingModule"],
+                _components_tabs_tabs_component_module__WEBPACK_IMPORTED_MODULE_16__["TabsModule"],
+                _modals_delivery_modal_delivery_modal_module__WEBPACK_IMPORTED_MODULE_18__["DeliveryModalPageModule"],
+                _modals_add_delivery_modal_add_delivery_modal_module__WEBPACK_IMPORTED_MODULE_19__["AddDeliveryModalPageModule"],
+                _modals_shipping_modal_shipping_modal_module__WEBPACK_IMPORTED_MODULE_20__["ShippingModalPageModule"],
+                _modals_filter_product_modal_filter_product_modal_module__WEBPACK_IMPORTED_MODULE_17__["FilterProductModalPageModule"]
             ],
             providers: [
                 _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_8__["StatusBar"],
                 _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_7__["SplashScreen"],
                 _ionic_native_screen_orientation_ngx__WEBPACK_IMPORTED_MODULE_9__["ScreenOrientation"],
-                _services_auth_service__WEBPACK_IMPORTED_MODULE_12__["AuthService"],
+                _services_auth_service__WEBPACK_IMPORTED_MODULE_13__["AuthService"],
                 { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicRouteStrategy"] },
                 _ionic_native_nfc_ngx__WEBPACK_IMPORTED_MODULE_10__["NFC"],
-                _ionic_native_stripe_ngx__WEBPACK_IMPORTED_MODULE_11__["Stripe"]
+                _ionic_native_stripe_ngx__WEBPACK_IMPORTED_MODULE_11__["Stripe"],
+                _ionic_native_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_12__["InAppBrowser"]
             ],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -1339,6 +1350,177 @@ var DeliveryModalPage = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/modals/filter-product-modal/filter-product-modal.module.ts":
+/*!****************************************************************************!*\
+  !*** ./src/app/modals/filter-product-modal/filter-product-modal.module.ts ***!
+  \****************************************************************************/
+/*! exports provided: FilterProductModalPageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FilterProductModalPageModule", function() { return FilterProductModalPageModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _filter_product_modal_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./filter-product-modal.page */ "./src/app/modals/filter-product-modal/filter-product-modal.page.ts");
+
+
+
+
+
+
+
+var routes = [
+    {
+        path: '',
+        component: _filter_product_modal_page__WEBPACK_IMPORTED_MODULE_6__["FilterProductModalPage"]
+    }
+];
+var FilterProductModalPageModule = /** @class */ (function () {
+    function FilterProductModalPageModule() {
+    }
+    FilterProductModalPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes)
+            ],
+            declarations: [_filter_product_modal_page__WEBPACK_IMPORTED_MODULE_6__["FilterProductModalPage"]]
+        })
+    ], FilterProductModalPageModule);
+    return FilterProductModalPageModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/modals/filter-product-modal/filter-product-modal.page.scss":
+/*!****************************************************************************!*\
+  !*** ./src/app/modals/filter-product-modal/filter-product-modal.page.scss ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL21vZGFscy9maWx0ZXItcHJvZHVjdC1tb2RhbC9maWx0ZXItcHJvZHVjdC1tb2RhbC5wYWdlLnNjc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/modals/filter-product-modal/filter-product-modal.page.ts":
+/*!**************************************************************************!*\
+  !*** ./src/app/modals/filter-product-modal/filter-product-modal.page.ts ***!
+  \**************************************************************************/
+/*! exports provided: FilterProductModalPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FilterProductModalPage", function() { return FilterProductModalPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+var FilterProductModalPage = /** @class */ (function () {
+    function FilterProductModalPage(modalCtrl, productService) {
+        this.modalCtrl = modalCtrl;
+        this.productService = productService;
+    }
+    FilterProductModalPage.prototype.ngOnInit = function () {
+    };
+    FilterProductModalPage.prototype.ionViewWillEnter = function () {
+        var _this = this;
+        this.minPrice_nm = 0.00;
+        this.maxPrice_nm = 0.00;
+        this.productService.getProductCategories()
+            .then(function (categories_data) {
+            _this.productCategories = categories_data;
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    FilterProductModalPage.prototype.selectSorting = function (selected_index) {
+        var thisSelected_elem = jquery__WEBPACK_IMPORTED_MODULE_4___default()("#sort > ion-col > ion-button[data-id=\"" + selected_index + "\"]");
+        if (thisSelected_elem.hasClass("selected") == false) {
+            jquery__WEBPACK_IMPORTED_MODULE_4___default()("#sort > ion-col > ion-button").removeClass("selected");
+            jquery__WEBPACK_IMPORTED_MODULE_4___default()("#sort > ion-col > ion-button").attr("color", "light");
+            thisSelected_elem.addClass("selected");
+            thisSelected_elem.attr("color", "secondary");
+        }
+        else {
+            jquery__WEBPACK_IMPORTED_MODULE_4___default()("#sort > ion-col > ion-button").removeClass("selected");
+            jquery__WEBPACK_IMPORTED_MODULE_4___default()("#sort > ion-col > ion-button").attr("color", "light");
+        }
+    };
+    FilterProductModalPage.prototype.selectCategory = function (selected_index) {
+        var thisSelected_elem = jquery__WEBPACK_IMPORTED_MODULE_4___default()("#category > ion-col > ion-button[data-id=\"" + selected_index + "\"]");
+        if (thisSelected_elem.hasClass("selected") == false) {
+            jquery__WEBPACK_IMPORTED_MODULE_4___default()("#category > ion-col > ion-button").removeClass("selected");
+            jquery__WEBPACK_IMPORTED_MODULE_4___default()("#category > ion-col > ion-button").attr("color", "light");
+            thisSelected_elem.addClass("selected");
+            thisSelected_elem.attr("color", "secondary");
+        }
+        else {
+            jquery__WEBPACK_IMPORTED_MODULE_4___default()("#category > ion-col > ion-button").removeClass("selected");
+            jquery__WEBPACK_IMPORTED_MODULE_4___default()("#category > ion-col > ion-button").attr("color", "light");
+        }
+    };
+    FilterProductModalPage.prototype.applyFilter = function () {
+        var _this = this;
+        var sortVal_st = jquery__WEBPACK_IMPORTED_MODULE_4___default()("#sort > ion-col > ion-button.selected").attr("data-value");
+        var catVal_st = jquery__WEBPACK_IMPORTED_MODULE_4___default()("#category > ion-col > ion-button.selected").attr("data-value");
+        this.productService.getProductsFilter(sortVal_st, catVal_st, this.minPrice_nm, this.maxPrice_nm)
+            .then(function (products_data) {
+            _this.dismissModal(products_data);
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+    };
+    FilterProductModalPage.prototype.clearFilter = function () {
+        jquery__WEBPACK_IMPORTED_MODULE_4___default()("#sort > ion-col > ion-button").removeClass("selected");
+        jquery__WEBPACK_IMPORTED_MODULE_4___default()("#sort > ion-col > ion-button").attr("color", "light");
+        jquery__WEBPACK_IMPORTED_MODULE_4___default()("#category > ion-col > ion-button").removeClass("selected");
+        jquery__WEBPACK_IMPORTED_MODULE_4___default()("#category > ion-col > ion-button").attr("color", "light");
+        this.minPrice_nm = 0.00;
+        this.maxPrice_nm = 0.00;
+    };
+    FilterProductModalPage.prototype.dismissModal = function (products) {
+        this.modalCtrl.dismiss({ filteredProducts: products });
+    };
+    FilterProductModalPage.ctorParameters = function () { return [
+        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"] },
+        { type: _services_product_service__WEBPACK_IMPORTED_MODULE_3__["ProductService"] }
+    ]; };
+    FilterProductModalPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-filter-product-modal',
+            template: __webpack_require__(/*! raw-loader!./filter-product-modal.page.html */ "./node_modules/raw-loader/index.js!./src/app/modals/filter-product-modal/filter-product-modal.page.html"),
+            styles: [__webpack_require__(/*! ./filter-product-modal.page.scss */ "./src/app/modals/filter-product-modal/filter-product-modal.page.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"],
+            _services_product_service__WEBPACK_IMPORTED_MODULE_3__["ProductService"]])
+    ], FilterProductModalPage);
+    return FilterProductModalPage;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/modals/shipping-modal/shipping-modal.module.ts":
 /*!****************************************************************!*\
   !*** ./src/app/modals/shipping-modal/shipping-modal.module.ts ***!
@@ -1681,37 +1863,9 @@ var OrderService = /** @class */ (function () {
         this.BASE_ORDER_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API_HOST_URL + "/api/orders";
         this.GET_SHIPPING_OPTS_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API_HOST_URL + "/api/shipping-options";
         this.DELIVERY_ADDRESS_CREATE_API_URL = this.BASE_DELIVERY_ADDRESS_API_URL + "/create";
-        this.GET_ORDER_HISTORY_API_URL = this.BASE_ORDER_API_URL + "/history";
         this.ORDER_CREATE_API_URL = this.BASE_ORDER_API_URL + "/create";
         this.ORDER_UPDATE_API_URL = this.BASE_ORDER_API_URL + "/update";
-        this.ORDER_REMOVE_API_URL = this.BASE_ORDER_API_URL + "/remove";
     }
-    OrderService.prototype.getUserLastOrder = function (limit) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.auth.getUID()
-                .then(function (uid_st) {
-                var body = {};
-                if (!isNaN(limit)) {
-                    body["limit"] = limit;
-                }
-                _this.httpClient.post(_this.GET_ORDER_HISTORY_API_URL, body, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
-                    .subscribe(function (response) {
-                    if (response.code == 20) {
-                        resolve(response.data);
-                    }
-                    else {
-                        reject(response.message);
-                    }
-                }, function (error) {
-                    reject("Error in getting data");
-                });
-            })
-                .catch(function (error) {
-                reject("Unable to get data");
-            });
-        });
-    };
     OrderService.prototype.getDeliveryAddresses = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
@@ -1922,6 +2076,167 @@ var OrderService = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_storage__WEBPACK_IMPORTED_MODULE_5__["Storage"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]])
     ], OrderService);
     return OrderService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/product.service.ts":
+/*!*********************************************!*\
+  !*** ./src/app/services/product.service.ts ***!
+  \*********************************************/
+/*! exports provided: ProductService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductService", function() { return ProductService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./auth.service */ "./src/app/services/auth.service.ts");
+
+
+
+
+
+var ProductService = /** @class */ (function () {
+    function ProductService(httpClient, auth) {
+        this.httpClient = httpClient;
+        this.auth = auth;
+        this.PRODUCT_BASE_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API_HOST_URL + "/api/products";
+        this.PRODUCT_GET_CATEGORY_API_URL = this.PRODUCT_BASE_API_URL + "/category";
+        this.PRODUCT_FILTER_API_URL = this.PRODUCT_BASE_API_URL + "/filter";
+    }
+    ProductService.prototype.load = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.auth.getUID()
+                .then(function (uid_st) {
+                _this.httpClient.post(_this.PRODUCT_BASE_API_URL, "", { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
+                    .subscribe(function (response) {
+                    if (response.code == 20) {
+                        resolve(response.data);
+                    }
+                    else {
+                        reject(response.message);
+                    }
+                }, function (error) {
+                    reject("Error in getting products");
+                });
+            })
+                .catch(function (error) {
+                reject("Unable to load profile");
+            });
+        });
+    };
+    ProductService.prototype.getProductCategories = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.auth.getUID()
+                .then(function (uid_st) {
+                _this.httpClient.post("" + _this.PRODUCT_GET_CATEGORY_API_URL, "", { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
+                    .subscribe(function (response) {
+                    if (response.code == 20) {
+                        resolve(response.data);
+                    }
+                    else {
+                        reject(response.message);
+                    }
+                }, function (error) {
+                    reject("Error in getting product categories");
+                });
+            })
+                .catch(function (error) {
+                reject("Unable to load profile");
+            });
+        });
+    };
+    ProductService.prototype.getProductsFilter = function (sortType, category, minPriceRange, maxPriceRange) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.auth.getUID()
+                .then(function (uid_st) {
+                var body = {
+                    sort_type: sortType,
+                    category: category,
+                    min_price: minPriceRange,
+                    max_price: maxPriceRange
+                };
+                _this.httpClient.post("" + _this.PRODUCT_FILTER_API_URL, body, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
+                    .subscribe(function (response) {
+                    if (response.code == 20) {
+                        resolve(response.data);
+                    }
+                    else {
+                        reject(response.message);
+                    }
+                }, function (error) {
+                    reject("Error in getting product");
+                });
+            })
+                .catch(function (error) {
+                reject("Unable to load profile");
+            });
+        });
+    };
+    ProductService.prototype.searchProduct = function (searchValue) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.auth.getUID()
+                .then(function (uid_st) {
+                _this.httpClient.post(_this.PRODUCT_BASE_API_URL + "/search/" + searchValue, "", { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
+                    .subscribe(function (response) {
+                    if (response.code == 20) {
+                        resolve(response.data);
+                    }
+                    else {
+                        reject(response.message);
+                    }
+                }, function (error) {
+                    reject("Error in getting products");
+                });
+            })
+                .catch(function (error) {
+                reject("Unable to load profile");
+            });
+        });
+    };
+    ProductService.prototype.getProductDetails = function (product_id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.auth.getUID()
+                .then(function (uid_st) {
+                _this.httpClient.post(_this.PRODUCT_BASE_API_URL + "/" + product_id, "", { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
+                    .subscribe(function (response) {
+                    if (response.code == 20) {
+                        resolve(response.data);
+                    }
+                    else {
+                        reject(response.message);
+                    }
+                }, function (error) {
+                    reject("Error in getting products");
+                });
+            })
+                .catch(function (error) {
+                reject("Unable to load profile");
+            });
+        });
+    };
+    ProductService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+        { type: _auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"] }
+    ]; };
+    ProductService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]])
+    ], ProductService);
+    return ProductService;
 }());
 
 

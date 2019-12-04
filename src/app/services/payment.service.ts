@@ -35,7 +35,6 @@ export class PaymentService {
 
           this.stripe.createCardToken(card_obj)
             .then((token) => {
-              console.log(token.id);
               let body = {
                 "orderId": orderId,
                 "tokenId": token.id
@@ -53,7 +52,7 @@ export class PaymentService {
                 });
             })
             .catch((error) => {
-              reject(error);
+              reject("Payment method not supported");
             });
         })
         .catch((error) => {

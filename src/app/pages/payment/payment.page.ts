@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ToastController } from '@ionic/angular';
-import { ActivatedRoute } from "@angular/router";
+import { LoadingController, ToastController, NavController } from '@ionic/angular';
+import { ActivatedRoute, NavigationExtras } from "@angular/router";
 
 import $ from 'jquery';
 
@@ -23,7 +23,15 @@ export class PaymentPage implements OnInit {
   public cvc_st: string;
   public nfcAccepted_bool: boolean;
 
-  constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController, private route: ActivatedRoute, private orderService: OrderService, private nfcService: NfcService, private paymentService: PaymentService) { }
+  constructor(
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private navCtrl: NavController,
+    private route: ActivatedRoute,
+    private orderService: OrderService,
+    private nfcService: NfcService,
+    private paymentService: PaymentService
+  ) { }
 
   ngOnInit() {
   }
@@ -45,6 +53,12 @@ export class PaymentPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    // initialize input fields
+    this.cardNumber_st = "";
+    this.expMonth_st = "";
+    this.expYear_st = "";
+    this.cvc_st = "";
+
     this.route.queryParams.subscribe(params => {
       this.orderId = params["order_id"];
       this.orderService.getOrderDetails(this.orderId)
@@ -53,7 +67,7 @@ export class PaymentPage implements OnInit {
           this.amountPayable_nm = data['total_amount_nm'];
         })
         .catch((error) => {
-          console.log(error);
+          this.presentToast(error);
         });
     });
 
@@ -78,7 +92,6 @@ export class PaymentPage implements OnInit {
         this.cvc_st = prompt("Please fill in the card CVC");        
       })
       .catch((error) => {
-        console.log(error);
         this.presentToast(error);
       });
   }
@@ -99,14 +112,21 @@ export class PaymentPage implements OnInit {
       cvc: this.cvc_st
     };
 
-    console.log("user card", card_obj);
-
     this.paymentService.makePayment(this.orderId, card_obj)
       .then(() => {
         this.loadingCtrl.dismiss();
         this.presentToast("Payment Successful!");
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+              order_id: this.orderId
+          }
+        };
+        this.navCtrl.navigateForward('/payment/payment-complete', navigationExtras);
       })
       .catch((error) => {
+        setTimeout(() => {
+          this.loadingCtrl.dismiss();
+        }, 2000);
         this.presentToast(error);
       });
   }

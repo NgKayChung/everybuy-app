@@ -115,16 +115,20 @@ let CheckoutPage = class CheckoutPage {
             .catch((error) => {
             console.log(error);
         });
-        this.orderService.getUserLastOrder(1)
+        this.orderService.getDeliveryAddresses()
             .then((delivery_address) => {
-            this.selectedDeliveryAddress = delivery_address[0];
+            if (delivery_address) {
+                this.selectedDeliveryAddress = delivery_address[0];
+            }
         })
             .catch((error) => {
             console.log(error);
         });
         this.orderService.getShippingOptions()
             .then((shipping_options) => {
-            this.selectedShippingOption = shipping_options[0];
+            if (shipping_options) {
+                this.selectedShippingOption = shipping_options[0];
+            }
         })
             .catch((error) => {
             console.log(error);
@@ -175,7 +179,6 @@ let CheckoutPage = class CheckoutPage {
     placeOrder() {
         this.orderService.createOrder(this.productInfo.product_id, this.selectedDeliveryAddress.delivery_id, this.selectedShippingOption.shipping_id)
             .then((response_orderId) => {
-            this.navCtrl.navigateRoot("/payment");
             let navigationExtras = {
                 queryParams: {
                     order_id: response_orderId

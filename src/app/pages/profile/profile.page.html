@@ -1,36 +1,79 @@
 <ion-header>
   <ion-toolbar color="secondary">
-    <ion-title>
-      Profile
-    </ion-title>
+    <ion-buttons>
+      <ion-back-button defaultHref="/preference"></ion-back-button>
+      <ion-title>Account Preferences</ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-card class="welcome-card">
-      <img src="/assets/shapes.svg" alt="" />
-      <ion-card-header>
-        <ion-card-subtitle>Profile</ion-card-subtitle>
-        <ion-card-title id="username-title">...</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>You can edit your profile preferences here.</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-list>
-      <ion-item>
-        <ion-icon slot="start" color="medium" name="settings"></ion-icon>
-        <ion-label>Account Settings</ion-label>
-      </ion-item>
-      <ion-item (click)="logout()">
-        <ion-icon slot="start" color="medium" name="log-out"></ion-icon>
-        <ion-label>Logout</ion-label>
-      </ion-item>
-    </ion-list>
-    <!-- <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-      <ion-fab-button (click)="logout()">
-        <ion-icon name="arrow-dropup"></ion-icon>
-      </ion-fab-button>
-    </ion-fab> -->
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Edit Profile">
+      <div>
+        <ion-card>
+          <ion-item lines="full">
+            <ion-label position="stacked">First Name</ion-label>
+            <ion-input [(ngModel)]="firstName_st" placeholder="First Name"></ion-input>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label position="stacked">Last Name</ion-label>
+            <ion-input [(ngModel)]="lastName_st" placeholder="Last Name"></ion-input>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label position="stacked">Username</ion-label>
+            <ion-input [(ngModel)]="username_st" readonly disabled></ion-input>
+          </ion-item>
+        </ion-card>
+        <ion-card>
+          <ion-item lines="full">
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input type="email" [(ngModel)]="emailAddress_st" placeholder="Email Address"></ion-input>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label position="stacked">Phone</ion-label>
+            <ion-input [(ngModel)]="phoneNumber_st" placeholder="Phone Number"></ion-input>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label position="stacked">Gender</ion-label>
+            <ion-select interface="popover" [(ngModel)]="gender_st">
+              <ion-select-option value="M">Male</ion-select-option>
+              <ion-select-option value="F">Female</ion-select-option>
+              <ion-select-option value="N">Not Specify</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label position="stacked">Birthday</ion-label>
+            <ion-datetime displayFormat="DD-MM-YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="birthdate_st" placeholder="Select birthday"></ion-datetime>
+          </ion-item>
+        </ion-card>
+        <div class="ion-text-center" style="margin: 2rem 0;">
+          <ion-button shape="round" color="secondary" style="width: 75%;" (click)="updateProfile()">Submit</ion-button>
+          <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Change Password">
+      <div>
+        <ion-card>
+          <ion-item lines="full">
+            <ion-label position="stacked">Old Password</ion-label>
+            <ion-input type="password" [(ngModel)]="oldPassword_st" placeholder="Old Password"></ion-input>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label position="stacked">New Password</ion-label>
+            <ion-input type="password" [(ngModel)]="newPassword_st" placeholder="New Password"></ion-input>
+          </ion-item>
+          <ion-item lines="full">
+            <ion-label position="stacked">Confirm Your New Password</ion-label>
+            <ion-input type="password" [(ngModel)]="confirmPassword_st"></ion-input>
+          </ion-item>
+        </ion-card>
+        <div class="ion-text-center" style="margin: 2rem 0;">
+          <ion-button shape="round" color="secondary" style="width: 75%;" (click)="updatePassword()">Submit</ion-button>
+          <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </ion-content>
-<app-tabs></app-tabs>

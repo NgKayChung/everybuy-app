@@ -24,7 +24,6 @@ export interface API_ENQUIRY_RESPONSE extends API_AUTH_RESPONSE {
 export class AuthService {
   private USER_LOGIN_API_URL = AppConfig.API_HOST_URL + "/api/users/login";
   private USER_GUEST_LOGIN_API_URL = AppConfig.API_HOST_URL + "/api/users/login/guest";
-  private USER_ENQUIRY_API_URL = AppConfig.API_HOST_URL + "/api/users/enquiry";
   private USER_CREATE_API_URL = AppConfig.API_HOST_URL + "/api/users/create";
   
   public isLoggedIn: boolean;
@@ -89,23 +88,6 @@ export class AuthService {
           }
         }, error => {
           reject("Unable to register");
-        });
-    });
-  }
-
-  getUsername() : Promise<string> {
-    return new Promise((resolve, reject) => {
-      this.getUID()
-        .then((uid_st) => {
-          this.httpClient.post(this.USER_ENQUIRY_API_URL, "", { headers: new HttpHeaders(`Authorization: Bearer ${uid_st}`) })
-            .subscribe((response: API_ENQUIRY_RESPONSE) => {
-              resolve(response.data.username_st);
-            }, error => {
-              reject("Unable to load profile");
-            });
-        })
-        .catch((error) => {
-          reject("Unable to load profile");
         });
     });
   }
