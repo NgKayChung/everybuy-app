@@ -21,6 +21,11 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient, private auth: AuthService) { }
 
+  /**
+   * Products load function
+   * Retrieves all products from server
+   * By sending POST request included session token for authentication
+   */
   load() {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
@@ -43,6 +48,11 @@ export class ProductService {
     });
   }
   
+  /**
+   * Get product categories function
+   * Retrieves all product categories from server
+   * To populate categories for selection to filter products
+   */
   getProductCategories() {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
@@ -65,6 +75,11 @@ export class ProductService {
     });
   }
 
+  /**
+   * Filter product function
+   * Sends POST request to backend server to filter the products
+   * which matches the filtering options
+   */
   getProductsFilter(sortType, category, minPriceRange, maxPriceRange) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
@@ -94,6 +109,10 @@ export class ProductService {
     });
   }
 
+  /**
+   * Search product function
+   * Sends POST request to backend server to search for products which name matches the search text
+   */
   searchProduct(searchValue) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
@@ -116,6 +135,10 @@ export class ProductService {
     });
   }
 
+  /**
+   * Get product details function
+   * Retrieves product details from server using product ID
+   */
   getProductDetails(product_id) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()

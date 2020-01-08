@@ -34,6 +34,12 @@ export class AuthService {
     private httpClient: HttpClient) {
   }
 
+  /**
+   * Login user function
+   * Sends login parameters to server for login
+   * @param username_st 
+   * @param password_st
+   */
   loginUser(username_st, password_st) {
     return new Promise((resolve, reject) => {
       let loginData = {
@@ -76,6 +82,13 @@ export class AuthService {
     });
   }
 
+  /**
+   * Login user function
+   * Sends login parameters to server for login
+   * @param userData
+   * userData includes all the registration details which
+   * required for account creation
+   */
   registerUser(userData) {
     return new Promise((resolve, reject) => {
       this.httpClient.post(`${ this.USER_CREATE_API_URL }`, userData)
@@ -92,6 +105,9 @@ export class AuthService {
     });
   }
 
+  /**
+   * Function to get User login token from local storage
+   */
   getUID() {
     return new Promise((resolve, reject) => {
       this.storage.get('uid')
@@ -104,15 +120,17 @@ export class AuthService {
     });
   }
 
+  /**
+   * Function to check is User already logged in to system by retrieving
+   * login token from local storage
+   */
   checkLoggedIn() {
     this.storage.get('uid').then((userId) => {
       if(userId != null) {
-        // console.log('Logged in', userId);
         this.isLoggedIn = true;
         this.navCtrl.navigateRoot("/home");
       }
       else {
-        // console.log('Not logged in');
         this.isLoggedIn = false;
         this.navCtrl.navigateRoot("/login");
       }
@@ -123,6 +141,9 @@ export class AuthService {
     });
   }
 
+  /**
+   * Check if User is logged in as Guest
+   */
   isGuest() {
     return new Promise((resolve, reject) => {
       this.storage.get('isguest')
@@ -135,6 +156,10 @@ export class AuthService {
     });
   }
 
+  /**
+   * Logout User from system
+   * Removes login session token and isguest for indicating User is Guest
+   */
   logoutUser() {
     this.storage.remove('uid').then(() => {
       this.isLoggedIn = false;

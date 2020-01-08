@@ -46,9 +46,9 @@ export class AppComponent implements AfterViewInit {
         return;
       }
 
-      // get current active page
+      // get current active pages
       let view = this.activatedRoute.snapshot.firstChild.routeConfig.path;
-      if(view == "home" || view == "profile") {
+      if(view == "home" || view == "preference") {
         // Double check to exit app
         if (new Date().getTime() - lastTimeBackPress < timePeriodToExit) {
           navigator['app'].exitApp(); // Exit app

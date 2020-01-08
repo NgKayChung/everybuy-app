@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 
-import { AuthService } from '../../services/auth.service';
 import { ProductService } from '../../services/product.service';
 
 import { FilterProductModalPage } from '../../modals/filter-product-modal/filter-product-modal.page';
@@ -18,7 +17,6 @@ export class HomePage {
 
   constructor(
     private modalController: ModalController,
-    private authService: AuthService,
     private productService: ProductService
   ) {}
 
@@ -27,6 +25,11 @@ export class HomePage {
     this.retrieveProducts();
   }
 
+  /**
+   * Search change function
+   * This function executes once user makes changes on the text in search bar
+   * Calls ProductService.searchProduct for searching products with the search value
+   */
   onSearchChange(e) {
     let value = e.detail.value;
   
@@ -44,6 +47,10 @@ export class HomePage {
       });
   }
 
+  /**
+   * Retrieve products function
+   * Calls ProductService.load to retrieve products from server
+   */
   retrieveProducts() {
     this.productService.load()
       .then((productsData) => {
@@ -54,6 +61,10 @@ export class HomePage {
       });
   }
 
+  /**
+   * Filter product function
+   * Open Filter product modal
+   */
   async filterProduct() {
     const modal = await this.modalController.create({
       component: FilterProductModalPage,

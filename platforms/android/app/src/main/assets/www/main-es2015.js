@@ -20,6 +20,10 @@ var map = {
 	"./modals/shipping-modal/shipping-modal.module": [
 		"./src/app/modals/shipping-modal/shipping-modal.module.ts"
 	],
+	"./pages/about/about.module": [
+		"./src/app/pages/about/about.module.ts",
+		"pages-about-about-module"
+	],
 	"./pages/checkout/checkout.module": [
 		"./src/app/pages/checkout/checkout.module.ts",
 		"pages-checkout-checkout-module"
@@ -34,11 +38,17 @@ var map = {
 	],
 	"./pages/payment-complete/payment-complete.module": [
 		"./src/app/pages/payment-complete/payment-complete.module.ts",
+		"default~pages-payment-complete-payment-complete-module~pages-profile-profile-module",
 		"pages-payment-complete-payment-complete-module"
 	],
 	"./pages/payment/payment.module": [
 		"./src/app/pages/payment/payment.module.ts",
 		"pages-payment-payment-module"
+	],
+	"./pages/preference/preference.module": [
+		"./src/app/pages/preference/preference.module.ts",
+		"common",
+		"pages-preference-preference-module"
 	],
 	"./pages/product-details/product-details.module": [
 		"./src/app/pages/product-details/product-details.module.ts",
@@ -46,6 +56,8 @@ var map = {
 	],
 	"./pages/profile/profile.module": [
 		"./src/app/pages/profile/profile.module.ts",
+		"default~pages-payment-complete-payment-complete-module~pages-profile-profile-module",
+		"common",
 		"pages-profile-profile-module"
 	],
 	"./pages/register/register.module": [
@@ -508,7 +520,7 @@ module.exports = "<ion-tabs></ion-tabs>"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"home\">\n        <ion-icon name=\"home\"></ion-icon>\n        <ion-label>Home</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"profile\">\n        <ion-icon name=\"person\"></ion-icon>\n        <ion-label>Profile</ion-label>\n    </ion-tab-button>\n</ion-tab-bar>"
+module.exports = "<ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"home\">\n        <ion-icon name=\"home\"></ion-icon>\n        <ion-label>Home</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"preference\">\n        <ion-icon name=\"settings\"></ion-icon>\n        <ion-label>Preferences</ion-label>\n    </ion-tab-button>\n</ion-tab-bar>"
 
 /***/ }),
 
@@ -586,8 +598,16 @@ const routes = [
         loadChildren: './pages/home/home.module#HomePageModule'
     },
     {
+        path: 'preference',
+        loadChildren: './pages/preference/preference.module#PreferencePageModule'
+    },
+    {
         path: 'profile',
         loadChildren: './pages/profile/profile.module#ProfilePageModule'
+    },
+    {
+        path: 'about',
+        loadChildren: './pages/about/about.module#AboutPageModule'
     },
     {
         path: 'filter-product-modal',
@@ -705,9 +725,9 @@ let AppComponent = class AppComponent {
                 this.modalCtrl.dismiss();
                 return;
             }
-            // get current active page
+            // get current active pages
             let view = this.activatedRoute.snapshot.firstChild.routeConfig.path;
-            if (view == "home" || view == "profile") {
+            if (view == "home" || view == "preference") {
                 // Double check to exit app
                 if (new Date().getTime() - lastTimeBackPress < timePeriodToExit) {
                     navigator['app'].exitApp(); // Exit app
@@ -813,14 +833,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_nfc_ngx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic-native/nfc/ngx */ "./node_modules/@ionic-native/nfc/ngx/index.js");
 /* harmony import */ var _ionic_native_stripe_ngx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic-native/stripe/ngx */ "./node_modules/@ionic-native/stripe/ngx/index.js");
 /* harmony import */ var _ionic_native_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic-native/in-app-browser/ngx */ "./node_modules/@ionic-native/in-app-browser/ngx/index.js");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _components_tabs_tabs_component_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/tabs/tabs.component.module */ "./src/app/components/tabs/tabs.component.module.ts");
-/* harmony import */ var _modals_filter_product_modal_filter_product_modal_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modals/filter-product-modal/filter-product-modal.module */ "./src/app/modals/filter-product-modal/filter-product-modal.module.ts");
-/* harmony import */ var _modals_delivery_modal_delivery_modal_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modals/delivery-modal/delivery-modal.module */ "./src/app/modals/delivery-modal/delivery-modal.module.ts");
-/* harmony import */ var _modals_add_delivery_modal_add_delivery_modal_module__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modals/add-delivery-modal/add-delivery-modal.module */ "./src/app/modals/add-delivery-modal/add-delivery-modal.module.ts");
-/* harmony import */ var _modals_shipping_modal_shipping_modal_module__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./modals/shipping-modal/shipping-modal.module */ "./src/app/modals/shipping-modal/shipping-modal.module.ts");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm2015/animations.js");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _components_tabs_tabs_component_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/tabs/tabs.component.module */ "./src/app/components/tabs/tabs.component.module.ts");
+/* harmony import */ var _modals_filter_product_modal_filter_product_modal_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modals/filter-product-modal/filter-product-modal.module */ "./src/app/modals/filter-product-modal/filter-product-modal.module.ts");
+/* harmony import */ var _modals_delivery_modal_delivery_modal_module__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modals/delivery-modal/delivery-modal.module */ "./src/app/modals/delivery-modal/delivery-modal.module.ts");
+/* harmony import */ var _modals_add_delivery_modal_add_delivery_modal_module__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./modals/add-delivery-modal/add-delivery-modal.module */ "./src/app/modals/add-delivery-modal/add-delivery-modal.module.ts");
+/* harmony import */ var _modals_shipping_modal_shipping_modal_module__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./modals/shipping-modal/shipping-modal.module */ "./src/app/modals/shipping-modal/shipping-modal.module.ts");
+
 
 
 
@@ -846,7 +868,7 @@ let AppModule = class AppModule {
 };
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"]],
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"]],
         entryComponents: [],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
@@ -856,24 +878,25 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 name: '__everybuydb',
                 driverOrder: ['indexeddb', 'sqlite', 'websql']
             }),
-            _app_routing_module__WEBPACK_IMPORTED_MODULE_15__["AppRoutingModule"],
-            _components_tabs_tabs_component_module__WEBPACK_IMPORTED_MODULE_16__["TabsModule"],
-            _modals_delivery_modal_delivery_modal_module__WEBPACK_IMPORTED_MODULE_18__["DeliveryModalPageModule"],
-            _modals_add_delivery_modal_add_delivery_modal_module__WEBPACK_IMPORTED_MODULE_19__["AddDeliveryModalPageModule"],
-            _modals_shipping_modal_shipping_modal_module__WEBPACK_IMPORTED_MODULE_20__["ShippingModalPageModule"],
-            _modals_filter_product_modal_filter_product_modal_module__WEBPACK_IMPORTED_MODULE_17__["FilterProductModalPageModule"]
+            _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_13__["BrowserAnimationsModule"],
+            _app_routing_module__WEBPACK_IMPORTED_MODULE_16__["AppRoutingModule"],
+            _components_tabs_tabs_component_module__WEBPACK_IMPORTED_MODULE_17__["TabsModule"],
+            _modals_delivery_modal_delivery_modal_module__WEBPACK_IMPORTED_MODULE_19__["DeliveryModalPageModule"],
+            _modals_add_delivery_modal_add_delivery_modal_module__WEBPACK_IMPORTED_MODULE_20__["AddDeliveryModalPageModule"],
+            _modals_shipping_modal_shipping_modal_module__WEBPACK_IMPORTED_MODULE_21__["ShippingModalPageModule"],
+            _modals_filter_product_modal_filter_product_modal_module__WEBPACK_IMPORTED_MODULE_18__["FilterProductModalPageModule"]
         ],
         providers: [
             _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_8__["StatusBar"],
             _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_7__["SplashScreen"],
             _ionic_native_screen_orientation_ngx__WEBPACK_IMPORTED_MODULE_9__["ScreenOrientation"],
-            _services_auth_service__WEBPACK_IMPORTED_MODULE_13__["AuthService"],
+            _services_auth_service__WEBPACK_IMPORTED_MODULE_14__["AuthService"],
             { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicRouteStrategy"] },
             _ionic_native_nfc_ngx__WEBPACK_IMPORTED_MODULE_10__["NFC"],
             _ionic_native_stripe_ngx__WEBPACK_IMPORTED_MODULE_11__["Stripe"],
             _ionic_native_in_app_browser_ngx__WEBPACK_IMPORTED_MODULE_12__["InAppBrowser"]
         ],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"]]
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"]]
     })
 ], AppModule);
 
@@ -1620,7 +1643,6 @@ let AuthService = class AuthService {
         this.httpClient = httpClient;
         this.USER_LOGIN_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_5__["AppConfig"].API_HOST_URL + "/api/users/login";
         this.USER_GUEST_LOGIN_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_5__["AppConfig"].API_HOST_URL + "/api/users/login/guest";
-        this.USER_ENQUIRY_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_5__["AppConfig"].API_HOST_URL + "/api/users/enquiry";
         this.USER_CREATE_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_5__["AppConfig"].API_HOST_URL + "/api/users/create";
     }
     loginUser(username_st, password_st) {
@@ -1673,22 +1695,6 @@ let AuthService = class AuthService {
                 }
             }, error => {
                 reject("Unable to register");
-            });
-        });
-    }
-    getUsername() {
-        return new Promise((resolve, reject) => {
-            this.getUID()
-                .then((uid_st) => {
-                this.httpClient.post(this.USER_ENQUIRY_API_URL, "", { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](`Authorization: Bearer ${uid_st}`) })
-                    .subscribe((response) => {
-                    resolve(response.data.username_st);
-                }, error => {
-                    reject("Unable to load profile");
-                });
-            })
-                .catch((error) => {
-                reject("Unable to load profile");
             });
         });
     }
@@ -1930,7 +1936,10 @@ let OrderService = class OrderService {
         return new Promise((resolve, reject) => {
             this.auth.getUID()
                 .then((uid_st) => {
-                this.httpClient.post(`${this.BASE_ORDER_API_URL}/${orderId}`, "", { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](`Authorization: Bearer ${uid_st}`) })
+                let body = {};
+                if (orderId)
+                    body = { id: orderId };
+                this.httpClient.post(`${this.BASE_ORDER_API_URL}`, body, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](`Authorization: Bearer ${uid_st}`) })
                     .subscribe((response) => {
                     if (response.code == 20) {
                         resolve(response.data);
@@ -2025,6 +2034,7 @@ let ProductService = class ProductService {
         this.httpClient = httpClient;
         this.auth = auth;
         this.PRODUCT_BASE_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_3__["AppConfig"].API_HOST_URL + "/api/products";
+        this.PRODUCT_DETAILS_API_URL = this.PRODUCT_BASE_API_URL + "/details";
         this.PRODUCT_GET_CATEGORY_API_URL = this.PRODUCT_BASE_API_URL + "/category";
         this.PRODUCT_FILTER_API_URL = this.PRODUCT_BASE_API_URL + "/filter";
     }
@@ -2122,7 +2132,10 @@ let ProductService = class ProductService {
         return new Promise((resolve, reject) => {
             this.auth.getUID()
                 .then((uid_st) => {
-                this.httpClient.post(`${this.PRODUCT_BASE_API_URL}/${product_id}`, "", { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](`Authorization: Bearer ${uid_st}`) })
+                let body = {};
+                if (product_id)
+                    body = { id: product_id };
+                this.httpClient.post(`${this.PRODUCT_DETAILS_API_URL}`, body, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](`Authorization: Bearer ${uid_st}`) })
                     .subscribe((response) => {
                     if (response.code == 20) {
                         resolve(response.data);

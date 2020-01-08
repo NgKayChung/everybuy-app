@@ -520,6 +520,90 @@ var findCheckedOption = function (el, tagName) {
 
 
 
+/***/ }),
+
+/***/ "./src/app/services/profile.service.ts":
+/*!*********************************************!*\
+  !*** ./src/app/services/profile.service.ts ***!
+  \*********************************************/
+/*! exports provided: ProfileService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfileService", function() { return ProfileService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+
+
+
+
+
+var ProfileService = /** @class */ (function () {
+    function ProfileService(auth, httpClient) {
+        this.auth = auth;
+        this.httpClient = httpClient;
+        this.PROFILE_ENQUIRY_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_4__["AppConfig"].API_HOST_URL + "/api/profile/enquiry";
+        this.PROFILE_EDIT_API_URL = _app_config__WEBPACK_IMPORTED_MODULE_4__["AppConfig"].API_HOST_URL + "/api/profile/edit";
+    }
+    ProfileService.prototype.getUserProfile = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.auth.getUID()
+                .then(function (uid_st) {
+                _this.httpClient.post(_this.PROFILE_ENQUIRY_API_URL, "", { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
+                    .subscribe(function (response) {
+                    resolve(response.data);
+                }, function (error) {
+                    reject("Unable to load profile");
+                });
+            })
+                .catch(function (error) {
+                reject("Unable to load profile");
+            });
+        });
+    };
+    // used for updating both profile and password
+    ProfileService.prototype.updateUserDetails = function (update_obj) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.auth.getUID()
+                .then(function (uid_st) {
+                _this.httpClient.post(_this.PROFILE_EDIT_API_URL, update_obj, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]("Authorization: Bearer " + uid_st) })
+                    .subscribe(function (response) {
+                    if (response.code == 20) {
+                        resolve(response);
+                    }
+                    else {
+                        reject(response.message);
+                    }
+                }, function (error) {
+                    reject("Unable to load profile");
+                });
+            })
+                .catch(function (error) {
+                reject("Unable to load profile");
+            });
+        });
+    };
+    ProfileService.ctorParameters = function () { return [
+        { type: _auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    ]; };
+    ProfileService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+    ], ProfileService);
+    return ProfileService;
+}());
+
+
+
 /***/ })
 
 }]);

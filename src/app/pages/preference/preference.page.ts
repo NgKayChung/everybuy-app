@@ -26,13 +26,11 @@ export class PreferencePage {
               document.getElementById("username-title").innerHTML = "Hi, " + user_data["username_st"] + "!";
             })
             .catch((error) => {
-              console.log(error);
               document.getElementById("username-title").innerHTML = "...";
             });
         }
       })
       .catch((error) => {
-        console.log(error);
         document.getElementById("username-title").innerHTML = "...";
       });
   }

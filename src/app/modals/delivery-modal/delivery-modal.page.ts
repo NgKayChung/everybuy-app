@@ -25,6 +25,10 @@ export class DeliveryModalPage implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Get selected (delivery ID) from page parameters
+   * Set the selected delivery address to the respective ID
+   */
   ionViewWillEnter() {
     this.selectedDeliveryId = this.navParams.get("selected");
     this.orderService.getDeliveryAddresses()
@@ -36,6 +40,10 @@ export class DeliveryModalPage implements OnInit {
       });
   }
 
+  /**
+   * Executes when user ticks a delivery address selection
+   * Set tick icon to the selected delivery address
+   */
   selectDeliveryAddress(selected_id) {
     this.selectedDeliveryId = selected_id;
     let thisSelected_elem = $(`ion-item[data-id="${ selected_id }"]`);
@@ -45,7 +53,11 @@ export class DeliveryModalPage implements OnInit {
     }
   }
 
-  async presentAddDeliveryModal(deliveryId) {
+  /**
+   * Displays add delivery address modal
+   * Allows user to add new delivery address
+   */
+  async presentAddDeliveryModal() {
     const modal = await this.modalCtrl.create({
       component: AddDeliveryModalPage
     });
@@ -63,6 +75,9 @@ export class DeliveryModalPage implements OnInit {
     return await modal.present();
   }
 
+  /**
+   * Close modal and returns the selected delivery address ID
+   */
   dismissModal() {
     this.modalCtrl.dismiss({ selectedDelivery: this.selectedDeliveryId });
   }

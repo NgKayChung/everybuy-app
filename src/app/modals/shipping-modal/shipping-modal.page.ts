@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 
 import { OrderService } from '../../services/order.service';
@@ -34,6 +34,11 @@ export class ShippingModalPage implements OnInit {
       });
   }
 
+  /**
+   * Executes when shipping option is selected
+   * Change style and assign new selected shipping ID
+   * @param selected_id
+   */
   selectShippingOption(selected_id) {
     this.selectedShippingId = selected_id;
     let thisSelected_elem = $(`ion-item[data-id="${ selected_id }"]`);

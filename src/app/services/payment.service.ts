@@ -20,10 +20,18 @@ export class PaymentService {
 
   constructor(private httpClient: HttpClient, private stripe: Stripe, private auth: AuthService) { }
 
+  /**
+   * Make Payment function
+   * Calls Ionic Native Stripe library functions
+   * The user object was not used because the testing environment
+   * in Stripe does not allow to make any payment using actual card details
+   * Therefore, testing card details are used to make mockup payment process
+   */
   makePayment(orderId, userCard_obj) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
         .then((uid_st) => {
+          // set Stripe API testing public key 
           this.stripe.setPublishableKey('pk_test_HKC3vn1hzDGig9R73CBFs36A00eAwQClZm');
 
           let card_obj = {
@@ -33,6 +41,10 @@ export class PaymentService {
             cvc: '220'
           };
 
+          /**
+           * Stripe.createCardToken is called to generate a card token to allow
+           * host server to make a charge request to Stripe server
+           */
           this.stripe.createCardToken(card_obj)
             .then((token) => {
               let body = {

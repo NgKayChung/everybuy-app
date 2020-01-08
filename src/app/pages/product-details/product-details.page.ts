@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { NavController, LoadingController, IonHeader } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NavController, IonHeader } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { ProductService } from '../../services/product.service';
@@ -35,9 +35,7 @@ export class ProductDetailsPage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private loadingController: LoadingController,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private auth: AuthService,
     private productService: ProductService,
     private orderService: OrderService
@@ -46,6 +44,10 @@ export class ProductDetailsPage implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Retrieves product details from product ID
+   * Calls ProductService.getProductDetails
+   */
   ionViewWillEnter() {
     this.activatedRoute.paramMap.subscribe((params) => {
       let product_id = params.get('id');
@@ -60,13 +62,22 @@ export class ProductDetailsPage implements OnInit {
   }
 
   getImages() {
-    return (this.productInfo.image_urls_st ? this.productInfo.image_urls_st.split(',') : ["http://my-test-11.slatic.net/p/132ce03862f288b8d1eec9e3d8b972aa.jpg_340x340q80.jpg"]);
+    return (this.productInfo.image_urls_st ? this.productInfo.image_urls_st.split(',') : ["https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg"]);
   }
 
   getProductPrice() {
     return "Price: RM " + this.productInfo.product_price_nm.toFixed(2);
   }
 
+  /**
+   * Executes when Purchase button is tapped
+   * First check is the user logged in as Guest
+   * if yes
+   *    Popup message to inform user to login to purchase
+   * else
+   *    Remove any existing order in for the user(Make Fail)
+   *    Proceed to checkout page
+   */
   purchase() {
     this.auth.isGuest()
       .then(async (userIsGuest_bl) => {
@@ -81,9 +92,6 @@ export class ProductDetailsPage implements OnInit {
           }).then((result) => {
             if(result.value) {
               this.auth.logoutUser();
-            }
-            else {
-              console.log("User cancels purchase and login");
             }
           });
         }
@@ -100,37 +108,21 @@ export class ProductDetailsPage implements OnInit {
       });
   }
 
+  /**
+   * Executes when the screen is scrolled
+   * To make change in the opacity of the header bar
+   */
   scrollScreen(e) {
+    // if current scrolling position is not at top
     if(e.detail.scrollTop > 0) {
+      // lower header bar opacity and styles
       this.myHeader["el"].classList.remove("atTop");
       this.myHeader["el"].classList.replace("scrolledTop", "scrolled");
     }
     else {
+      // fixed header bar position at top and styles
       this.myHeader["el"].classList.replace("scrolled", "scrolledTop");
       this.myHeader["el"].classList.add("atTop");
     }
-  }
-
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Hellooo',
-      duration: 2000
-    });
-    await loading.present();
-
-    const { role, data } = await loading.onDidDismiss();
-
-    console.log('Loading dismissed!');
-  }
-
-  async presentLoadingWithOptions() {
-    const loading = await this.loadingController.create({
-      spinner: null,
-      duration: 5000,
-      message: 'Please wait...',
-      translucent: true,
-      cssClass: 'custom-class custom-loading'
-    });
-    return await loading.present();
   }
 }

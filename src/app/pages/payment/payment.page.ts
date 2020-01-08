@@ -86,7 +86,7 @@ export class PaymentPage implements OnInit {
         // assign card details
         this.cardNumber_st = card_obj["cardNumber"];
         this.expMonth_st = card_obj["expMonth"];
-        this.expYear_st = card_obj["expYear"];
+        this.expYear_st = (2000 + parseInt(card_obj["expYear"])).toString();
         
         // prompt for CVC
         this.cvc_st = prompt("Please fill in the card CVC");        
@@ -102,6 +102,12 @@ export class PaymentPage implements OnInit {
     this.nfcService.close();
   }
 
+  /**
+   * Executes when user submits payment
+   * A card object is created to pass to PaymentService
+   * Calls PaymentService.makePayment to process payment through
+   * Stripe payment gateway
+   */
   processPayment() {
     this.presentLoading();
     

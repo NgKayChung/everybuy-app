@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, ToastController, NavParams } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 
 import { OrderService } from '../../services/order.service';
 
@@ -23,7 +23,6 @@ export class AddDeliveryModalPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private toastController: ToastController,
-    private navParams: NavParams,
     private orderService: OrderService
   ) { }
 
@@ -58,6 +57,10 @@ export class AddDeliveryModalPage implements OnInit {
     this.remarks_st = "";
   }
 
+  /**
+   * Submit adding delivery address
+   * Collect inputs from user and submit to server
+   */
   submitDeliveryAddress() {
     let newDeliv_obj = {
       recName_st: this.receiverName_st.trim(),

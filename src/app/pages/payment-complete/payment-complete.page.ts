@@ -46,7 +46,7 @@ export class PaymentCompletePage implements OnInit {
 
   viewReceipt() {
     if(this.receiptURL_st && this.receiptURL_st != null) {
-      const browser = this.iab.create(this.receiptURL_st);
+      this.iab.create(this.receiptURL_st);
     }
   }
 

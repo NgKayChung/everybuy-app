@@ -60,6 +60,10 @@ export class CheckoutPage implements OnInit {
       });
   }
 
+  /**
+   * Executes when delivery address tab is tapped
+   * Opens delivery address selection modal
+   */
   async presentDeliveryModal(deliveryId) {
     const modal = await this.modalController.create({
       component: DeliveryModalPage,
@@ -102,6 +106,10 @@ export class CheckoutPage implements OnInit {
     return await modal.present();
   }
 
+  /**
+   * Executes when user chooses to place order
+   * Calls OrderService.createOrder to make a new order to server
+   */
   placeOrder() {
     this.orderService.createOrder(this.productInfo.product_id, this.selectedDeliveryAddress.delivery_id, this.selectedShippingOption.shipping_id)
       .then((response_orderId) => {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 
-import { AuthService } from '../../services/auth.service';
 import { ProfileService } from '../../services/profile.service';
 
 import * as moment from 'moment';
@@ -25,7 +24,11 @@ export class ProfilePage {
   public newPassword_st: string;
   public confirmPassword_st: string;
 
-  constructor(private loadingController: LoadingController, private toastCtrl: ToastController, private auth: AuthService, private profileService: ProfileService) {}
+  constructor(
+    private loadingController: LoadingController,
+    private toastCtrl: ToastController,
+    private profileService: ProfileService
+  ) {}
 
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -51,6 +54,9 @@ export class ProfilePage {
     });
   }
 
+  /**
+   * Retrieves and Displays user profile in form
+   */
   initProfile() {
     this.profileService.getUserProfile()
       .then((user_data) => {
@@ -78,6 +84,12 @@ export class ProfilePage {
     this.initPassword();
   }
 
+  /**
+   * Update profile function
+   * Create an user object with updated values to update user profile
+   * Validates input fields
+   * Calls ProfileService.updateUserDetails to update user profile
+   */
   updateProfile() {
     let editUser_obj = {
       username_st: this.username_st,
@@ -138,12 +150,17 @@ export class ProfilePage {
       }
     }
 
+    // if birthdate_st is specified / not null
     if(editUser_obj.birthdate_st !== null) {
+      // convert to "YYYY-MM-DD" date formatted string
+      // using moment - DateTime processing library
       editUser_obj.birthdate_st = moment(new Date(editUser_obj.birthdate_st)).format('YYYY-MM-DD');
     }
 
     this.presentLoading();
 
+    // wait for 1 second before update user details - to avoid calling loadingController.dismiss
+    // before this.presentLoading completed
     setTimeout(() => {
       this.profileService.updateUserDetails(editUser_obj)
         .then((result) => {
@@ -156,20 +173,32 @@ export class ProfilePage {
           this.alertError(error);
         });
     }, 1000);
-
   }
 
+  /**
+   * Update password function
+   * Validates input fields
+   * Create an password object with new password to update user password
+   * Calls ProfileService.updateUserDetails to update user password
+   */
   updatePassword() {
+    // if oldPassword_st is empty
     if(this.oldPassword_st == "") {
       this.alertError("Please enter old password");
       return;
     }
 
+    // if newPassword_st is empty
     if(this.newPassword_st == "") {
       this.alertError("Please enter new password");
       return;
     }
+    else if(this.newPassword_st.length < 8) { // if newPassword_st has less than 8 characters
+      this.alertError("Please enter password in at least 8 characters");
+      return;
+    }
 
+    // if confirmation of new password does not match with new password 
     if(this.newPassword_st != this.confirmPassword_st) {
       this.alertError("Confirm password does not match with new password");
       return;

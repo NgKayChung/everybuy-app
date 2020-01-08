@@ -23,6 +23,7 @@ export class ProfileService {
 
   constructor(private auth: AuthService, private httpClient: HttpClient) { }
 
+  // function used to get user profile data
   getUserProfile() {
     return new Promise((resolve, reject) => {
       this.auth.getUID()

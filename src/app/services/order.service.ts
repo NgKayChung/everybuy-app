@@ -25,9 +25,14 @@ export class OrderService {
   private DELIVERY_ADDRESS_CREATE_API_URL = this.BASE_DELIVERY_ADDRESS_API_URL + "/create";
   private ORDER_CREATE_API_URL = this.BASE_ORDER_API_URL + "/create";
   private ORDER_UPDATE_API_URL = this.BASE_ORDER_API_URL + "/update";
+  private ORDER_REMOVE_API_URL = this.BASE_ORDER_API_URL + "/remove";
 
   constructor(private storage: Storage, private httpClient: HttpClient, private auth: AuthService) { }
 
+  /**
+   * Get all delivery addresses details or by optionally passing in
+   * delivery address ID for specific delivery address details
+   */
   getDeliveryAddresses(id? : string) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
@@ -54,6 +59,10 @@ export class OrderService {
     });
   }
   
+  /**
+   * Add delivery address by passing the details to server
+   * @param deliveryAddr_obj
+   */
   addDeliveryAddress(deliveryAddr_obj) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
@@ -76,6 +85,10 @@ export class OrderService {
     });
   }
 
+  /**
+   * Get all shipping options details or by optionally passing in
+   * shipping ID for specific shipping details
+   */
   getShippingOptions(id? : string) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
@@ -101,12 +114,17 @@ export class OrderService {
     });
   }
 
+  /**
+   * Creates/Updates order for the user
+   * Sends POST request to host server
+   */
   createOrder(productId: string, deliveryId: string, shippingId: string) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
         .then((uid_st) => {
           this.getExistingOrderId()
             .then((existingOrderId) => {
+              // if there is existing order ID stored in local storage
               if(existingOrderId) {
                 let body = {
                   order_id: existingOrderId,
@@ -115,6 +133,7 @@ export class OrderService {
                   shipping_id: shippingId
                 };
 
+                // update details of the order
                 this.httpClient.post(this.ORDER_UPDATE_API_URL, body, { headers: new HttpHeaders(`Authorization: Bearer ${ uid_st }`) })
                   .subscribe((response: API_ORDER_RESPONSE) => {
                     if(response.code == 20) {
@@ -134,10 +153,12 @@ export class OrderService {
                   shipping_id: shippingId
                 };
 
+                // create a new order
                 this.httpClient.post(this.ORDER_CREATE_API_URL, body, { headers: new HttpHeaders(`Authorization: Bearer ${ uid_st }`) })
                   .subscribe((response: API_ORDER_DATA_RESPONSE) => {
                     if(response.code == 20) {
-                      this.storage.set('imcompleteOrderId', response.data);
+                      // stores order ID in local storage
+                      this.storage.set('incompleteOrderId', response.data);
                       resolve(response.data);
                     }
                     else {
@@ -158,9 +179,12 @@ export class OrderService {
     });
   }
 
+  /**
+   * Get existing order ID stored in local storage
+   */
   getExistingOrderId() {
     return new Promise((resolve, reject) => {
-      this.storage.get('imcompleteOrderId')
+      this.storage.get('incompleteOrderId')
         .then((orderId) => {
           resolve(orderId);
         })
@@ -170,6 +194,10 @@ export class OrderService {
     });
   }
 
+  /**
+   * Function to get order details for the specific order ID
+   * @param orderId
+   */
   getOrderDetails(orderId) {
     return new Promise((resolve, reject) => {
       this.auth.getUID()
@@ -195,32 +223,40 @@ export class OrderService {
     });
   }
   
+  /**
+   * Get remove existing order function
+   * Retrieves existing order ID from local storage
+   * If existed
+   *    Remove the order from server (Set to Fail)
+   * Else
+   *    Return
+   */
   removeAnyExistingOrder() {
     return new Promise((resolve, reject) => {
       this.getExistingOrderId()
         .then((existingOrderId) => {
           if(existingOrderId) { // order is existed
-            this.storage.remove('imcompleteOrderId');
-            // let body = {
-            //   order_id: existingOrderId
-            // };
-            // this.auth.getUID()
-            //   .then((uid_st) => {
-            //     this.httpClient.post(this.ORDER_REMOVE_API_URL, body, { headers: new HttpHeaders(`Authorization: Bearer ${ uid_st }`) })
-            //       .subscribe((response: API_ORDER_DATA_RESPONSE) => {
-            //         if(response.code == 20) {
-            //           resolve(response.data);
-            //         }
-            //         else {
-            //           reject(response.message);
-            //         }
-            //       }, error => {
-            //         reject(error);
-            //       });
-            //   })
-            //   .catch((error) => {
-            //     reject(error);
-            //   });
+            this.storage.remove('incompleteOrderId');
+            let body = {
+              order_id: existingOrderId
+            };
+            this.auth.getUID()
+              .then((uid_st) => {
+                this.httpClient.post(this.ORDER_REMOVE_API_URL, body, { headers: new HttpHeaders(`Authorization: Bearer ${ uid_st }`) })
+                  .subscribe((response: API_ORDER_DATA_RESPONSE) => {
+                    if(response.code == 20) {
+                      resolve(response.data);
+                    }
+                    else {
+                      reject(response.message);
+                    }
+                  }, error => {
+                    reject(error);
+                  });
+              })
+              .catch((error) => {
+                reject(error);
+              });
           }
           else { // if no existing order
             resolve();
