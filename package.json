@@ -39,7 +39,7 @@
     "cordova-sqlite-storage": "^3.4.0",
     "core-js": "^2.5.4",
     "es6-promise-plugin": "^4.2.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "phonegap-nfc": "^1.0.3",
     "phonegap-nfc-isodep": "^0.7.3",
